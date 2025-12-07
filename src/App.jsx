@@ -40,7 +40,9 @@ const TRANSLATIONS = {
     confirm_delete_bank: "确定要删除“{{name}}”整个词库吗？",
     new_template_name: "新模版",
     new_template_content: "### 新模版\n\n开始编辑你的内容，使用 {{variable}} 插入变量。",
-    copy_suffix: " (副本)"
+    copy_suffix: " (副本)",
+    add_custom_option: "添加自定义选项",
+    confirm: "确定"
   },
   en: {
     template_management: "Templates",
@@ -78,7 +80,9 @@ const TRANSLATIONS = {
     confirm_delete_bank: "Delete the entire bank “{{name}}”?",
     new_template_name: "New Template",
     new_template_content: "### New Template\n\nStart editing content. Use {{variable}} to insert variables.",
-    copy_suffix: " (Copy)"
+    copy_suffix: " (Copy)",
+    add_custom_option: "Add Custom Option",
+    confirm: "Confirm"
   }
 };
 
@@ -244,8 +248,27 @@ const useStickyState = (defaultValue, key) => {
 
 
 // --- 组件：可点击的变量词 ---
-const Variable = ({ id, index, config, currentVal, isOpen, onToggle, onSelect, popoverRef, t }) => {
+const Variable = ({ id, index, config, currentVal, isOpen, onToggle, onSelect, onAddCustom, popoverRef, t }) => {
+  const [isAdding, setIsAdding] = useState(false);
+  const [customVal, setCustomVal] = useState("");
+
+  // Reset state when popover closes
+  useEffect(() => {
+    if (!isOpen) {
+        setIsAdding(false);
+        setCustomVal("");
+    }
+  }, [isOpen]);
+
   if (!config) return <span className="text-red-400 bg-red-50 px-1 rounded border border-red-200 text-xs" title={`${t('undefined_var')}: ${id}`}>[{id}?]</span>;
+
+  const handleAddSubmit = () => {
+      if (customVal.trim()) {
+          onAddCustom(customVal.trim());
+          setCustomVal("");
+          setIsAdding(false);
+      }
+  };
 
   return (
     <div className="relative inline-block mx-1 align-baseline group text-base">
@@ -289,6 +312,40 @@ const Variable = ({ id, index, config, currentVal, isOpen, onToggle, onSelect, p
                 {t('no_options')}
               </div>
             )}
+          </div>
+          
+           {/* Add Custom Option Footer */}
+           <div className="p-2 border-t border-gray-100 bg-gray-50">
+             {isAdding ? (
+                 <div className="flex gap-2">
+                     <input 
+                        autoFocus
+                        type="text"
+                        value={customVal}
+                        onChange={(e) => setCustomVal(e.target.value)}
+                        placeholder={t('add_option_placeholder')}
+                        className="flex-1 min-w-0 px-2 py-1 text-sm border border-gray-300 rounded focus:border-indigo-500 outline-none"
+                        onKeyDown={(e) => e.key === 'Enter' && handleAddSubmit()}
+                     />
+                     <button 
+                        onClick={handleAddSubmit}
+                        disabled={!customVal.trim()}
+                        className="px-2 py-1 bg-indigo-600 text-white rounded text-xs font-medium hover:bg-indigo-700 disabled:opacity-50"
+                     >
+                        {t('confirm')}
+                     </button>
+                 </div>
+             ) : (
+                 <button 
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setIsAdding(true);
+                    }}
+                    className="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded border border-indigo-200 transition-colors font-medium dashed"
+                 >
+                    <Plus size={12} /> {t('add_custom_option')}
+                 </button>
+             )}
           </div>
         </div>
       )}
@@ -617,6 +674,18 @@ const App = () => {
     setActivePopover(null);
   };
 
+  const handleAddCustomAndSelect = (key, index, newValue) => {
+    if (!newValue || !newValue.trim()) return;
+    
+    // 1. Add to bank if not exists
+    if (!banks[key].options.includes(newValue)) {
+        handleAddOption(key, newValue);
+    }
+    
+    // 2. Select it
+    handleSelect(key, index, newValue);
+  };
+
   const handleAddOption = (key, newOption) => {
     if (!newOption.trim()) return;
     setBanks(prev => ({
@@ -845,6 +914,7 @@ const App = () => {
               setActivePopover(activePopover === uniqueKey ? null : uniqueKey);
             }}
             onSelect={(opt) => handleSelect(key, varIndex, opt)}
+            onAddCustom={(val) => handleAddCustomAndSelect(key, varIndex, val)}
             popoverRef={popoverRef}
             t={t}
           />
