@@ -1,4 +1,4 @@
-// Variable 组件 - 可点击的变量词
+// Variable 元件 - 可點擊的變數詞
 import React, { useState, useEffect } from 'react';
 import { Check, Plus, X } from 'lucide-react';
 import { CATEGORY_STYLES, PREMIUM_STYLES } from '../constants/styles';
@@ -78,7 +78,7 @@ export const Variable = ({
         {currentVal || <span className="opacity-70 italic">{t('please_select')}</span>}
       </span>
       
-      {/* Popover - 词库选择器 */}
+      {/* Popover - 詞庫選擇器 */}
       {isOpen && (
         <div 
           ref={popoverRef}

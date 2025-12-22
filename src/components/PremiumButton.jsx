@@ -1,4 +1,4 @@
-// PremiumButton 组件 - 带渐变效果的高级按钮
+// PremiumButton 元件 - 帶漸變效果的高階按鈕
 import React, { useState } from 'react';
 import { PREMIUM_STYLES } from '../constants/styles';
 

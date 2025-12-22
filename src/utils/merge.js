@@ -1,9 +1,9 @@
-// 合并策略函数
+// 合併策略函數
 import { INITIAL_TEMPLATES_CONFIG } from '../data/templates';
 import { INITIAL_BANKS, INITIAL_DEFAULTS } from '../data/banks';
 import { deepClone, makeUniqueKey } from './helpers';
 
-// 合并系统模板，系统模板强制更新，用户改动备份
+// 合併系統模板，系統模板強制更新，使用者改動備份
 export const mergeTemplatesWithSystem = (currentTemplates, { backupSuffix }) => {
   const systemMap = new Map(INITIAL_TEMPLATES_CONFIG.map(t => [t.id, deepClone(t)]));
   const merged = INITIAL_TEMPLATES_CONFIG.map(t => deepClone(t));
@@ -18,13 +18,13 @@ export const mergeTemplatesWithSystem = (currentTemplates, { backupSuffix }) => 
         const backupId = makeUniqueKey(t.id, existingIds, "user");
         existingIds.add(backupId);
         merged.push({ ...deepClone(t), id: backupId, name: `${t.name}${backupSuffix || ""}` });
-        notes.push(`模板 ${t.id} 已更新，旧版备份为 ${backupId}`);
+        notes.push(`模板 ${t.id} 已更新，舊版備份為 ${backupId}`);
       }
     } else {
       let newId = t.id;
       if (existingIds.has(newId)) {
         newId = makeUniqueKey(newId, existingIds, "custom");
-        notes.push(`自定义模板 ${t.id} 与系统冲突，已重命名为 ${newId}`);
+        notes.push(`自訂模板 ${t.id} 與系統衝突，已重新命名為 ${newId}`);
       }
       existingIds.add(newId);
       merged.push({ ...deepClone(t), id: newId });
@@ -34,7 +34,7 @@ export const mergeTemplatesWithSystem = (currentTemplates, { backupSuffix }) => 
   return { templates: merged, notes };
 };
 
-// 合并系统词库与默认值，系统词库强制更新，用户改动备份
+// 合併系統詞庫與預設值，系統詞庫強制更新，使用者改動備份
 export const mergeBanksWithSystem = (currentBanks, currentDefaults, { backupSuffix }) => {
   const mergedBanks = deepClone(INITIAL_BANKS);
   const mergedDefaults = { ...INITIAL_DEFAULTS };
@@ -49,13 +49,13 @@ export const mergeBanksWithSystem = (currentBanks, currentDefaults, { backupSuff
         existingKeys.add(backupKey);
         mergedBanks[backupKey] = deepClone(bank);
         if (currentDefaults && key in currentDefaults) mergedDefaults[backupKey] = currentDefaults[key];
-        notes.push(`词库 ${key} 已更新，用户改动备份为 ${backupKey}`);
+        notes.push(`詞庫 ${key} 已更新，使用者改動備份為 ${backupKey}`);
       }
     } else {
       let newKey = key;
       if (existingKeys.has(newKey)) {
         newKey = makeUniqueKey(newKey, existingKeys, "custom");
-        notes.push(`自定义词库 ${key} 与系统冲突，已重命名为 ${newKey}`);
+        notes.push(`自訂詞庫 ${key} 與系統衝突，已重新命名為 ${newKey}`);
       }
       existingKeys.add(newKey);
       mergedBanks[newKey] = deepClone(bank);

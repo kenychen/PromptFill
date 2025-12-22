@@ -7,7 +7,7 @@ import {
 import { PremiumButton } from './PremiumButton';
 
 /**
- * TemplatesSidebar 组件 - 负责展示左侧模版列表
+ * TemplatesSidebar 元件 - 負責展示左側模板列表
  */
 export const TemplatesSidebar = React.memo(({ 
   mobileTab, 
@@ -57,7 +57,7 @@ export const TemplatesSidebar = React.memo(({
          <div className="flex items-center justify-between mb-3">
              <div className="flex flex-row items-baseline gap-2">
                   <h1 className="font-bold tracking-tight text-sm text-orange-500">
-                      提示词填空器
+                      提示詞填空器
                       <span className="text-gray-400 text-xs font-normal ml-1">V0.5.0</span>
                   </h1>
              </div>
@@ -67,7 +67,7 @@ export const TemplatesSidebar = React.memo(({
                   <button 
                     onClick={() => setDiscoveryView(true)} 
                     className="p-1.5 rounded-lg transition-all text-orange-500 bg-orange-50/50 hover:text-orange-600 hover:bg-orange-100 shadow-sm" 
-                    title="回到发现页"
+                    title="回到發現頁"
                   >
                     <Home size={18} />
                   </button>
@@ -86,11 +86,11 @@ export const TemplatesSidebar = React.memo(({
                     {isSortMenuOpen && (
                       <div className="absolute top-full mt-2 right-0 bg-white rounded-xl shadow-xl border border-gray-100 py-2 min-w-[140px] z-[100]">
                         {[
-                          { value: 'newest', label: '最新优先' },
-                          { value: 'oldest', label: '最旧优先' },
+                          { value: 'newest', label: '最新優先' },
+                          { value: 'oldest', label: '最舊優先' },
                           { value: 'a-z', label: 'A-Z' },
                           { value: 'z-a', label: 'Z-A' },
-                          { value: 'random', label: '🎲 随机排序' }
+                          { value: 'random', label: '🎲 隨機排序' }
                         ].map(option => (
                           <button
                             key={option.value}

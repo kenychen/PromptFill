@@ -44,7 +44,7 @@ const AnimatedSlogan = React.memo(({ isActive }) => {
 
   return (
     <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-2 gap-y-3 text-base md:text-lg lg:text-xl text-gray-700 font-medium font-['MiSans',system-ui,sans-serif] px-2 leading-relaxed min-h-[60px]">
-      <span className="whitespace-nowrap">"展示一个精致的、微缩</span>
+      <span className="whitespace-nowrap">"展示一個精緻的、微縮</span>
       <div className="inline-flex items-center justify-center min-w-[120px]">
         <span 
           key={`style-${styleIndex}`}
@@ -76,7 +76,7 @@ const AnimatedSlogan = React.memo(({ isActive }) => {
           {SCENE_WORDS[sceneIndex]}
         </span>
             </div>
-      <span className="whitespace-nowrap">场景"</span>
+      <span className="whitespace-nowrap">場景"</span>
     </div>
   );
 });
@@ -131,7 +131,7 @@ const MobileAnimatedSlogan = React.memo(({ isActive }) => {
           {SCENE_WORDS[sceneIndex]}
         </span>
                             </div>
-      <span className="whitespace-nowrap">场景"</span>
+      <span className="whitespace-nowrap">場景"</span>
         </div>
     );
 });
@@ -151,7 +151,7 @@ const App = () => {
   const currentMasonryStyle = MASONRY_STYLES[masonryStyleKey] || MASONRY_STYLES.default;
 
   // Global State with Persistence
-  // bump version keys to强制刷新新增词库与默认值
+  // bump version keys to强制刷新新增詞庫与默认值
   const [banks, setBanks] = useStickyState(INITIAL_BANKS, "app_banks_v9");
   const [defaults, setDefaults] = useStickyState(INITIAL_DEFAULTS, "app_defaults_v9");
   const [language, setLanguage] = useStickyState("cn", "app_language_v1"); 
@@ -219,7 +219,7 @@ const App = () => {
   const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
   const [randomSeed, setRandomSeed] = useState(Date.now()); // 用于随机排序的种子
   
-  // 检查系统模版更新
+  // 检查系统模板更新
   useEffect(() => {
     if (SYSTEM_DATA_VERSION && lastAppliedVersion !== SYSTEM_DATA_VERSION) {
       // 检查是否有存储的数据。如果是第一次使用（无数据），直接静默更新版本号
@@ -247,7 +247,7 @@ const App = () => {
           }
         }
       } catch (e) {
-        // 静默失败
+        // 静默失敗
       }
     };
     
@@ -290,7 +290,7 @@ const App = () => {
           const currentTemplateExists = templates.some(t => t.id === activeTemplateId);
           if (!currentTemplateExists || !activeTemplateId) {
               // 如果当前选中的模板不存在或为空，选择第一个模板
-              console.log('[自动选择] 选择第一个模板:', templates[0].id);
+              console.log('[自動選擇] 選擇第一個模板:', templates[0].id);
               setActiveTemplateId(templates[0].id);
           }
       }
@@ -298,14 +298,14 @@ const App = () => {
 
   // 移动端：切换 Tab 时的状态保障
   useEffect(() => {
-      // 模版 Tab：强制收起模式 + 列表视图
+      // 模板 Tab：强制收起模式 + 列表视图
       if (mobileTab === 'templates') {
           setMasonryStyleKey('list');
       }
 
-      // 编辑 / 词库 Tab：确保有选中的模板
+      // 编辑 / 詞庫 Tab：确保有选中的模板
       if ((mobileTab === 'editor' || mobileTab === 'banks') && templates.length > 0 && !activeTemplateId) {
-          console.log('[tab切换] 自动选择第一个模板:', templates[0].id);
+          console.log('[tab切換] 自動選擇第一個模板:', templates[0].id);
           setActiveTemplateId(templates[0].id);
       }
   }, [mobileTab, templates, activeTemplateId]);
@@ -335,7 +335,7 @@ const App = () => {
                       }
                   }
               } catch (error) {
-                  console.error('恢复文件夹句柄失败:', error);
+                  console.error('恢復資料夾句柄失敗:', error);
               }
           }
       };
@@ -365,7 +365,7 @@ const App = () => {
           const store = transaction.objectStore('handles');
           await store.put(handle, 'directory');
       } catch (error) {
-          console.error('保存文件夹句柄失败:', error);
+          console.error('儲存資料夾句柄失敗:', error);
       }
   };
 
@@ -379,7 +379,7 @@ const App = () => {
               request.onerror = () => reject(request.error);
           });
       } catch (error) {
-          console.error('获取文件夹句柄失败:', error);
+          console.error('取得資料夾句柄失敗:', error);
           return null;
       }
   };
@@ -591,7 +591,7 @@ const App = () => {
     setEditingTemplateNameId(null);
   };
 
-  // 刷新系统模板与词库，保留用户数据
+  // 刷新系统模板与詞庫，保留用户数据
   const handleRefreshSystemData = () => {
     const backupSuffix = t('refreshed_backup_suffix') || '';
     const templateResult = mergeTemplatesWithSystem(templates, { backupSuffix });
@@ -672,7 +672,7 @@ const App = () => {
           // 验证文件类型
           if (!file.type.startsWith('image/')) {
               if (storageMode === 'browser') {
-                  alert('请选择图片文件');
+                  alert('請選擇圖片檔案');
               }
               return;
           }
@@ -688,29 +688,29 @@ const App = () => {
                       t.id === activeTemplateId ? { ...t, imageUrl: reader.result } : t
                   ));
               } catch (error) {
-                  console.error('图片上传失败:', error);
+                  console.error('圖片上傳失敗:', error);
                   if (storageMode === 'browser' && error.name === 'QuotaExceededError') {
-                      alert('存储空间不足！图片过大。\n建议：\n1. 使用图片链接（URL）方式\n2. 压缩图片（tinypng.com）\n3. 导出备份后清空数据');
+                      alert('儲存空間不足！圖片過大。\n建議：\n1. 使用圖片連結（URL）方式\n2. 壓縮圖片（tinypng.com）\n3. 匯出備份後清空資料');
                   } else {
                       if (storageMode === 'browser') {
-                          alert('图片上传失败，请重试');
+                          alert('圖片上傳失敗，請重試');
                       }
                   }
               }
           };
           
           reader.onerror = () => {
-              console.error('文件读取失败');
+              console.error('檔案讀取失敗');
               if (storageMode === 'browser') {
-                  alert('文件读取失败，请重试');
+                  alert('檔案讀取失敗，請重試');
               }
           };
           
           reader.readAsDataURL(file);
       } catch (error) {
-          console.error('上传图片出错:', error);
+          console.error('上傳圖片出錯:', error);
           if (storageMode === 'browser') {
-              alert('上传图片出错，请重试');
+              alert('上傳圖片出錯，請重試');
           }
       } finally {
           // 重置input，允许重复选择同一文件
@@ -758,13 +758,13 @@ const App = () => {
                       await navigator.share({
                           files: [file],
                           title: template.name,
-                          text: '导出的提示词模板'
+                          text: '匯出的提示詞模板'
                       });
-                      showToastMessage('✅ 模板已分享/保存');
+                      showToastMessage('✅ 模板已分享/儲存');
                       return;
                   }
               } catch (shareError) {
-                  console.log('Web Share API 失败，使用降级方案', shareError);
+                  console.log('Web Share API 失敗，使用降級方案', shareError);
               }
           }
           
@@ -788,10 +788,10 @@ const App = () => {
               URL.revokeObjectURL(url);
           }, 100);
           
-          showToastMessage('✅ 模板已导出');
+          showToastMessage('✅ 模板已匯出');
       } catch (error) {
-          console.error('导出失败:', error);
-          alert('导出失败，请重试');
+          console.error('匯出失敗:', error);
+          alert('匯出失敗，請重試');
       }
   };
 
@@ -819,14 +819,14 @@ const App = () => {
                   if (navigator.canShare && navigator.canShare({ files: [file] })) {
                       await navigator.share({
                           files: [file],
-                          title: '提示词填空器备份',
-                          text: '所有模板和词库的完整备份'
+                          title: '提示詞填空器備份',
+                          text: '所有模板和詞庫的完整備份'
                       });
-                      showToastMessage('✅ 备份已分享/保存');
+                      showToastMessage('✅ 備份已分享/儲存');
                       return;
                   }
               } catch (shareError) {
-                  console.log('Web Share API 失败，使用降级方案', shareError);
+                  console.log('Web Share API 失敗，使用降級方案', shareError);
               }
           }
           
@@ -850,10 +850,10 @@ const App = () => {
               URL.revokeObjectURL(url);
           }, 100);
           
-          showToastMessage('✅ 备份已导出');
+          showToastMessage('✅ 備份已匯出');
       } catch (error) {
-          console.error('导出失败:', error);
-          alert('导出失败，请重试');
+          console.error('匯出失敗:', error);
+          alert('匯出失敗，請重試');
       }
   };
 
@@ -869,11 +869,11 @@ const App = () => {
               // 检查是单个模板还是完整备份
               if (data.templates && Array.isArray(data.templates)) {
                   // 完整备份
-                  if (window.confirm('检测到完整备份文件。是否要覆盖当前所有数据？')) {
+                  if (window.confirm('檢測到完整備份檔案。是否要覆蓋當前所有資料？')) {
                       setTemplates(data.templates);
                       if (data.banks) setBanks(data.banks);
                       if (data.categories) setCategories(data.categories);
-                      alert('导入成功！');
+                      alert('匯入成功！');
                   }
               } else if (data.id && data.name) {
                   // 单个模板
@@ -881,13 +881,13 @@ const App = () => {
                   const newTemplate = { ...data, id: newId };
                   setTemplates(prev => [...prev, newTemplate]);
                   setActiveTemplateId(newId);
-                  alert('模板导入成功！');
+                  alert('模板匯入成功！');
               } else {
-                  alert('文件格式不正确');
+                  alert('檔案格式不正確');
               }
           } catch (error) {
-              console.error('导入失败:', error);
-              alert('导入失败，请检查文件格式');
+              console.error('匯入失敗:', error);
+              alert('匯入失敗，請檢查檔案格式');
           }
       };
       reader.readAsText(file);
@@ -920,7 +920,7 @@ const App = () => {
           await saveToFileSystem(handle);
           alert(t('auto_save_enabled'));
       } catch (error) {
-          console.error('选择文件夹失败:', error);
+          console.error('選擇資料夾失敗:', error);
           if (error.name !== 'AbortError') {
               alert(t('folder_access_denied'));
           }
@@ -945,9 +945,9 @@ const App = () => {
           await writable.write(JSON.stringify(data, null, 2));
           await writable.close();
           
-          console.log('数据已保存到本地文件夹');
+          console.log('資料已儲存到本地資料夾');
       } catch (error) {
-          console.error('保存到文件系统失败:', error);
+          console.error('儲存到檔案系統失敗:', error);
       }
   };
 
@@ -965,9 +965,9 @@ const App = () => {
           if (data.categories) setCategories(data.categories);
           if (data.defaults) setDefaults(data.defaults);
           
-          console.log('从本地文件夹加载数据成功');
+          console.log('從本地資料夾載入資料成功');
       } catch (error) {
-          console.error('从文件系统读取失败:', error);
+          console.error('從檔案系統讀取失敗:', error);
       }
   };
 
@@ -1009,8 +1009,8 @@ const App = () => {
               // 刷新页面
               window.location.reload();
           } catch (error) {
-              console.error('清除数据失败:', error);
-              alert('清除数据失败');
+              console.error('清除資料失敗:', error);
+              alert('清除資料失敗');
           }
       }
   };
@@ -1027,7 +1027,7 @@ const App = () => {
           const store = transaction.objectStore('handles');
           await store.delete('directory');
       } catch (error) {
-          console.error('清除文件夹句柄失败:', error);
+          console.error('清除資料夾句柄失敗:', error);
       }
   };
   
@@ -1035,9 +1035,9 @@ const App = () => {
       if (directoryHandle) {
           try {
               await loadFromFileSystem(directoryHandle);
-              alert('从文件夹加载成功！');
+              alert('從資料夾載入成功！');
           } catch (error) {
-              alert('从文件夹加载失败，请检查文件是否存在');
+              alert('從資料夾載入失敗，請檢查檔案是否存在');
           }
       }
   };
@@ -1282,9 +1282,9 @@ const App = () => {
             imgElement.src = tempBase64Src;
             await waitForImageLoad(imgElement);
         } catch (e) {
-            console.warn("图片 Base64 转换失败，尝试直接导出", e);
-            // 如果 fetch 失败（比如彻底的 CORS 封锁），我们只能尝试允许 canvas 污染
-            // 但通常 fetch 失败意味着 canvas 也会失败
+            console.warn("圖片 Base64 轉換失敗，嘗試直接匯出", e);
+            // 如果 fetch 失敗（比如彻底的 CORS 封锁），我们只能尝试允许 canvas 污染
+            // 但通常 fetch 失敗意味着 canvas 也会失敗
         }
     } else if (imgElement) {
         // 即便没转 base64，也要确保当前展示图已加载完成
@@ -1297,21 +1297,21 @@ const App = () => {
     let qrCodeBase64 = null;
     
     try {
-        console.log('正在加载本地二维码...', localQrCodePath);
+        console.log('正在載入本地二維碼...', localQrCodePath);
         const qrResponse = await fetch(localQrCodePath);
-        if (!qrResponse.ok) throw new Error('本地二维码加载失败');
+        if (!qrResponse.ok) throw new Error('本地二維碼載入失敗');
         const qrBlob = await qrResponse.blob();
         qrCodeBase64 = await new Promise((resolve) => {
             const reader = new FileReader();
             reader.onloadend = () => {
-                console.log('本地二维码加载成功');
+                console.log('本地二維碼載入成功');
                 resolve(reader.result);
             };
             reader.readAsDataURL(qrBlob);
         });
     } catch (e) {
-        console.error("本地二维码加载失败", e);
-        // 即使失败也继续，会显示占位符
+        console.error("本地二維碼載入失敗", e);
+        // 即使失敗也继续，会显示占位符
     }
 
     try {
@@ -1374,7 +1374,7 @@ const App = () => {
                    const contentElement = card.querySelector('#final-prompt-content');
                    const contentHTML = contentElement ? contentElement.innerHTML : '';
                    
-                   console.log('正文内容获取:', contentHTML ? '成功' : '失败', contentHTML.length);
+                   console.log('正文內容取得:', contentHTML ? '成功' : '失敗', contentHTML.length);
                    
                    // 获取版本号（动态从原始DOM）
                    const metaContainer = card.querySelector('.flex.flex-wrap.gap-2');
@@ -1497,7 +1497,7 @@ const App = () => {
                    `;
                    
                    card.appendChild(footer);
-                   console.log('新布局已应用');
+                   console.log('新佈局已應用');
                 }
             }
         });
@@ -1523,9 +1523,9 @@ const App = () => {
                     await navigator.share({
                         files: [file],
                         title: activeTemplate.name,
-                        text: '导出的提示词模板'
+                        text: '匯出的提示詞模板'
                     });
-                    showToastMessage('✅ 图片已分享，请选择"存储图像"保存到相册');
+                    showToastMessage('✅ 圖片已分享，請選擇"儲存圖像"存到相簿');
                 } else {
                     // 降级方案：对于iOS，打开新标签页显示图片
                     if (isIOS) {
@@ -1549,7 +1549,7 @@ const App = () => {
                                 </body>
                                 </html>
                             `);
-                            showToastMessage('✅ 请在新页面长按图片保存');
+                            showToastMessage('✅ 請在新頁面長按圖片保存');
                         } else {
                             // 如果无法打开新窗口，尝试下载
                             const link = document.createElement('a');
@@ -1559,7 +1559,7 @@ const App = () => {
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
-                            showToastMessage('✅ 图片已导出，请在新页面保存');
+                            showToastMessage('✅ 圖片已匯出，請在新頁面保存');
                         }
                     } else {
                         // 安卓等其他移动设备：触发下载
@@ -1569,7 +1569,7 @@ const App = () => {
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
-                        showToastMessage('✅ 图片已保存到下载文件夹');
+                        showToastMessage('✅ 圖片已儲存到下載資料夾');
                     }
                 }
             } catch (shareError) {
@@ -1589,7 +1589,7 @@ const App = () => {
                             </html>
                         `);
                     }
-                    showToastMessage('⚠️ 请在新页面长按图片保存');
+                    showToastMessage('⚠️ 請在新頁面長按圖片保存');
                 } else {
                     const link = document.createElement('a');
                     link.href = image;
@@ -1597,7 +1597,7 @@ const App = () => {
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                    showToastMessage('✅ 图片已保存');
+                    showToastMessage('✅ 圖片已儲存');
                 }
             }
         } else {
@@ -1608,11 +1608,11 @@ const App = () => {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            showToastMessage('✅ 图片导出成功！');
+            showToastMessage('✅ 圖片匯出成功！');
         }
     } catch (err) {
         console.error("Export failed:", err);
-        showToastMessage('❌ 导出失败，请重试');
+        showToastMessage('❌ 匯出失敗，請重試');
     } finally {
         // 清理临时容器
         const tempContainer = document.getElementById('export-container-temp');
@@ -2184,7 +2184,7 @@ const App = () => {
 
       {/* --- Mobile Bottom Navigation - 4 Tabs --- */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-gray-200 flex justify-around items-center z-50 h-16 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
-          {/* 主页 */}
+          {/* 主頁 */}
           <button 
              onClick={() => {
                setMobileTab('home');
@@ -2193,10 +2193,10 @@ const App = () => {
              className={`flex flex-col items-center justify-center w-full h-full gap-0.5 ${mobileTab === 'home' ? 'text-orange-600' : 'text-gray-400'}`}
           >
              <LayoutGrid size={20} />
-             <span className="text-[10px] font-medium">主页</span>
+             <span className="text-[10px] font-medium">主頁</span>
           </button>
           
-          {/* 模版列表 */}
+          {/* 模板列表 */}
           <button 
              onClick={() => {
                setMobileTab('templates');
@@ -2205,16 +2205,16 @@ const App = () => {
              className={`flex flex-col items-center justify-center w-full h-full gap-0.5 ${mobileTab === 'templates' ? 'text-orange-600' : 'text-gray-400'}`}
           >
              <FileText size={20} />
-             <span className="text-[10px] font-medium">模版列表</span>
+             <span className="text-[10px] font-medium">模板列表</span>
           </button>
           
-          {/* 模版详情 */}
+          {/* 模板詳情 */}
           <button 
              onClick={() => {
                setDiscoveryView(false);
                // 强制确保有模板被选中，确保状态生效后再切换
                if (templates.length > 0 && !activeTemplateId) {
-                 console.log('[编辑按钮] 强制选择第一个模板:', templates[0].id);
+                 console.log('[編輯按鈕] 強制選擇第一個模板:', templates[0].id);
                  const firstId = templates[0].id;
                  setActiveTemplateId(firstId);
                  setTimeout(() => setMobileTab('editor'), 0);
@@ -2225,16 +2225,16 @@ const App = () => {
              className={`flex flex-col items-center justify-center w-full h-full gap-0.5 ${mobileTab === 'editor' ? 'text-orange-600' : 'text-gray-400'}`}
           >
              <Edit3 size={20} />
-             <span className="text-[10px] font-medium">模版详情</span>
+             <span className="text-[10px] font-medium">模板詳情</span>
           </button>
           
-          {/* 词库配置 */}
+          {/* 詞庫配置 */}
           <button 
              onClick={() => {
                setDiscoveryView(false);
                // 强制确保有模板被选中，确保状态生效后再切换
                if (templates.length > 0 && !activeTemplateId) {
-                 console.log('[词库按钮] 强制选择第一个模板:', templates[0].id);
+                 console.log('[詞庫按鈕] 強制選擇第一個模板:', templates[0].id);
                  const firstId = templates[0].id;
                  setActiveTemplateId(firstId);
                  setTimeout(() => setMobileTab('banks'), 0);
@@ -2245,7 +2245,7 @@ const App = () => {
              className={`flex flex-col items-center justify-center w-full h-full gap-0.5 ${mobileTab === 'banks' ? 'text-orange-600' : 'text-gray-400'}`}
           >
              <Settings size={20} />
-             <span className="text-[10px] font-medium">词库配置</span>
+             <span className="text-[10px] font-medium">詞庫配置</span>
           </button>
       </div>
 
@@ -2273,7 +2273,7 @@ const App = () => {
         t={t}
       />
 
-      {/* --- 更新提示弹窗 (模版更新) --- */}
+      {/* --- 更新提示弹窗 (模板更新) --- */}
       {showUpdateNotice && (
         <div className="fixed inset-0 z-[200] bg-black/70 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 transition-all">

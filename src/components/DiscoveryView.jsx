@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 
 /**
- * DiscoveryView 组件 - 瀑布流展示所有模板
+ * DiscoveryView 元件 - 瀑布流展示所有模板
  */
 export const DiscoveryView = React.memo(({ 
   filteredTemplates,
@@ -44,7 +44,7 @@ export const DiscoveryView = React.memo(({
         }}
       >
         <div className="flex flex-col w-full min-h-full px-5 py-8 gap-6">
-          {/* 1. 顶部 SVG 标题区域 */}
+          {/* 1. 頂部 SVG 標題區域 */}
           <div className="w-full flex justify-center px-4">
             <img 
               src="/Title.svg" 
@@ -53,12 +53,12 @@ export const DiscoveryView = React.memo(({
             />
           </div>
 
-          {/* 2. 动态文字区 */}
+          {/* 2. 動態文字區 */}
           <div className="w-full">
             <AnimatedSlogan isActive={true} />
           </div>
 
-          {/* 3. 功能按钮区域 */}
+          {/* 3. 功能按鈕區域 */}
           <div className="flex items-center justify-center gap-4 py-2">
             <button 
               onClick={() => setIsSortMenuOpen(!isSortMenuOpen)} 
@@ -72,11 +72,11 @@ export const DiscoveryView = React.memo(({
               {isSortMenuOpen && (
                 <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/60 py-2 min-w-[140px] z-[110] animate-in slide-in-from-top-2 duration-200">
                   {[
-                    { value: 'newest', label: '最新优先' },
-                    { value: 'oldest', label: '最旧优先' },
+                    { value: 'newest', label: '最新優先' },
+                    { value: 'oldest', label: '最舊優先' },
                     { value: 'a-z', label: 'A-Z' },
                     { value: 'z-a', label: 'Z-A' },
-                    { value: 'random', label: '🎲 随机排序' }
+                    { value: 'random', label: '🎲 隨機排序' }
                   ].map(option => (
                     <button
                       key={option.value}
@@ -112,7 +112,7 @@ export const DiscoveryView = React.memo(({
               <div className="p-3 bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:bg-orange-50 transition-all">
                 <Settings size={20} className="text-gray-600 group-hover:text-orange-600" />
               </div>
-              <span className="text-[10px] font-bold text-gray-500">设置</span>
+              <span className="text-[10px] font-bold text-gray-500">設定</span>
             </button>
 
             <button 
@@ -126,7 +126,7 @@ export const DiscoveryView = React.memo(({
             </button>
           </div>
 
-          {/* 4. 图像展示（单列） */}
+          {/* 4. 圖像展示（單列） */}
           <div className="flex flex-col gap-6 mt-2">
             {filteredTemplates.map(t_item => (
               <div 
@@ -241,7 +241,7 @@ export const DiscoveryView = React.memo(({
                                                   setZoomedImage(t_item.imageUrl);
                                               }}
                                               className="p-3 bg-white/20 text-white rounded-full hover:bg-white hover:text-gray-900 backdrop-blur-md transition-all duration-300 border border-white/30 shadow-lg"
-                                              title="查看大图"
+                                              title="查看大圖"
                                           >
                                               <ArrowUpRight size={20} />
                                           </button>
@@ -262,7 +262,7 @@ export const DiscoveryView = React.memo(({
                   <button 
                       onClick={() => setDiscoveryView(false)} 
                       className="p-2.5 rounded-xl transition-all text-gray-500 hover:text-orange-600 hover:bg-white/50 shadow-sm" 
-                      title="返回编辑器"
+                      title="返回編輯器"
                   >
                       <LayoutGrid size={20} />
                   </button>
@@ -281,11 +281,11 @@ export const DiscoveryView = React.memo(({
                       {isSortMenuOpen && (
                           <div className="absolute bottom-full mb-3 left-0 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/60 py-2 min-w-[160px] z-[100] animate-in slide-in-from-bottom-2 duration-200">
                               {[
-                                  { value: 'newest', label: '最新优先' },
-                                  { value: 'oldest', label: '最旧优先' },
+                                  { value: 'newest', label: '最新優先' },
+                                  { value: 'oldest', label: '最舊優先' },
                                   { value: 'a-z', label: 'A-Z' },
                                   { value: 'z-a', label: 'Z-A' },
-                                  { value: 'random', label: '🎲 随机排序' }
+                                  { value: 'random', label: '🎲 隨機排序' }
                               ].map(option => (
                                   <button
                                       key={option.value}
@@ -333,7 +333,7 @@ export const DiscoveryView = React.memo(({
                   <div className="flex items-center gap-3 text-[11px] font-medium text-gray-700 px-4 py-2">
                       <p>Made by CornerStudio</p>
                       <div className="w-1 h-1 rounded-full bg-gray-400" />
-                      <p>公众号：角落工作室</p>
+                      <p>公眾號：角落工作室</p>
                       <div className="w-1 h-1 rounded-full bg-gray-400" />
                       <p>Wechat: tanshilongmario</p>
                       <a 

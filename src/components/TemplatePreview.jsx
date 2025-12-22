@@ -150,10 +150,10 @@ export const TemplatePreview = React.memo(({
                             ))}
                         </div>
                         <p className="text-gray-400 text-sm font-medium mt-2">
-                            灵感来源与贡献：{activeTemplate.author || '官方'}
+                            靈感來源與貢獻：{activeTemplate.author || '官方'}
                         </p>
                         <p className="text-gray-400 text-sm font-medium mt-1">
-                            Made by "提示词填空器"
+                            Made by "提示詞填空器"
                         </p>
                     </div>
 
@@ -206,7 +206,7 @@ export const TemplatePreview = React.memo(({
                                         <button 
                                             onClick={(e) => { e.stopPropagation(); setZoomedImage(activeTemplate.imageUrl); }}
                                             className="p-2.5 bg-white/90 text-gray-700 rounded-full hover:bg-white hover:text-orange-600 transition-all shadow-lg"
-                                            title="查看大图"
+                                            title="查看大圖"
                                         >
                                             <ArrowUpRight size={18} />
                                         </button>
@@ -214,21 +214,21 @@ export const TemplatePreview = React.memo(({
                                     <button 
                                         onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
                                         className="p-2.5 bg-white/90 text-gray-700 rounded-full hover:bg-white hover:text-orange-600 transition-all shadow-lg"
-                                        title="更换图片(本地)"
+                                        title="更換圖片(本地)"
                                     >
                                         <Upload size={18} />
                                     </button>
                                     <button 
                                         onClick={(e) => { e.stopPropagation(); setShowImageUrlInput(true); }}
                                         className="p-2.5 bg-white/90 text-gray-700 rounded-full hover:bg-white hover:text-orange-600 transition-all shadow-lg"
-                                        title="更换图片(URL)"
+                                        title="更換圖片(URL)"
                                     >
                                         <Globe size={18} />
                                     </button>
                                     <button 
                                         onClick={(e) => { e.stopPropagation(); handleResetImage(); }}
                                         className="p-2.5 rounded-full bg-white/90 text-gray-700 hover:bg-white hover:text-orange-600 transition-all shadow-lg"
-                                        title="恢复默认图片"
+                                        title="恢復預設圖片"
                                     >
                                         <RotateCcw size={18} />
                                     </button>

@@ -1,4 +1,4 @@
-// VisualEditor 组件 - 可视化编辑器
+// VisualEditor 元件 - 可視化編輯器
 import React, { useRef } from 'react';
 import { CATEGORY_STYLES } from '../constants/styles';
 

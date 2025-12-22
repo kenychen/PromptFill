@@ -3,7 +3,7 @@ import { Settings, List, Check, ChevronRight, ChevronDown, Plus, Trash2, X, Chev
 import { CATEGORY_STYLES, PREMIUM_STYLES } from '../constants/styles';
 
 /**
- * 组件：词库分类块
+ * 元件：詞庫分類塊
  */
 const CategorySection = ({ catId, categories, banks, onInsert, onDeleteOption, onAddOption, onDeleteBank, onUpdateBankCategory, onStartAddBank, t }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -13,7 +13,7 @@ const CategorySection = ({ catId, categories, banks, onInsert, onDeleteOption, o
 
   const catBanks = Object.entries(banks).filter(([_, bank]) => (bank.category || 'other') === catId);
   
-  // 如果该分类下没有词库，不显示
+  // 如果該分類下沒有詞庫，不顯示
   if (catBanks.length === 0) return null;
 
   const style = CATEGORY_STYLES[category.color] || CATEGORY_STYLES.slate;
@@ -34,7 +34,7 @@ const CategorySection = ({ catId, categories, banks, onInsert, onDeleteOption, o
                     {catBanks.length}
                 </span>
             </h3>
-            {/* 折叠时的装饰线 */}
+            {/* 摺疊時的裝飾線 */}
             {isCollapsed && <div className="h-px bg-gradient-to-r from-gray-200 via-gray-100 to-transparent flex-1 ml-2"></div>}
         </div>
         
@@ -55,7 +55,7 @@ const CategorySection = ({ catId, categories, banks, onInsert, onDeleteOption, o
                     />
                 ))}
                 
-                {/* 新建词组按钮 */}
+                {/* 新建詞組按鈕 */}
                 <button
                     onClick={() => onStartAddBank(catId)}
                     className="w-full py-2.5 border-2 border-dashed border-gray-200 rounded-xl text-gray-400 hover:text-orange-600 hover:border-orange-300 hover:bg-gradient-to-br hover:from-orange-50/80 hover:to-orange-50/40 transition-all duration-300 flex items-center justify-center gap-2 group/add hover:shadow-sm"
@@ -71,7 +71,7 @@ const CategorySection = ({ catId, categories, banks, onInsert, onDeleteOption, o
 };
 
 /**
- * 组件：可折叠的词库组
+ * 元件：可折疊的詞庫組
  */
 const BankGroup = ({ bankKey, bank, onInsert, onDeleteOption, onAddOption, onDeleteBank, onUpdateBankCategory, categories, t }) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
@@ -217,7 +217,7 @@ const BankGroup = ({ bankKey, bank, onInsert, onDeleteOption, onAddOption, onDel
 };
 
 /**
- * 核心组件：分类管理器
+ * 核心元件：分類管理器
  */
 export const CategoryManager = ({ isOpen, onClose, categories, setCategories, banks, setBanks, t }) => {
   const [newCatName, setNewCatName] = useState("");
@@ -368,7 +368,7 @@ export const CategoryManager = ({ isOpen, onClose, categories, setCategories, ba
 };
 
 /**
- * 核心组件：变量插入选择器
+ * 核心元件：變數插入選擇器
  */
 export const InsertVariableModal = ({ isOpen, onClose, categories, banks, onSelect, t }) => {
   if (!isOpen) return null;
@@ -425,7 +425,7 @@ export const InsertVariableModal = ({ isOpen, onClose, categories, banks, onSele
 };
 
 /**
- * 核心组件：添加词库模态框
+ * 核心元件：新增詞庫模態框
  */
 export const AddBankModal = ({ isOpen, onClose, t, categories, newBankLabel, setNewBankLabel, newBankKey, setNewBankKey, newBankCategory, setNewBankCategory, onConfirm }) => {
     if (!isOpen) return null;
@@ -506,7 +506,7 @@ export const AddBankModal = ({ isOpen, onClose, t, categories, newBankLabel, set
 };
 
 /**
- * BanksSidebar 组件 - 负责展示右侧词库配置
+ * BanksSidebar 元件 - 負責展示右側詞庫配置
  */
 export const BanksSidebar = React.memo(({ 
   mobileTab, 
