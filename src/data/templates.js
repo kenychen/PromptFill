@@ -91,7 +91,7 @@ export const TEMPLATE_PHOTO_GRID_V2 = `### Photo Grid Composition (九宮格攝�
 **需要單獨處理：**中央宮格的圖片不侷限在自己的宮格內，形成一種從中央宮格躍出畫面的3D立體視覺，中央宮格人物佔據圖片較大面積且全身出鏡，會覆蓋到其他宮格，並對其他宮格形成陰影效果，營造一種裸眼3D的視覺張力`;
 
 export const TEMPLATE_FASHION_MOODBOARD = `### Fashion Illustration Moodboard (時尚插畫情緒板)
-一張9:16豎屏的高級時尚插畫情緒板，模擬平板掃描效果。
+一張9:16直立螢幕的高級時尚插畫情緒板，模擬平板掃描效果。
 
 **背景：** 純手繪的奶油色水彩暈染紙張，帶有淡淡的粉色網格。
 **視覺核心：** 數張具有明顯白色模切寬邊和柔和投影的亮面乙烯基貼紙。
@@ -383,7 +383,7 @@ export const INITIAL_TEMPLATES_CONFIG = [
     selections: {
       "company": "任天堂（Nintendo）",
       "render_style": "3D像素風格",
-      "ratio": "3:4豎構圖"
+      "ratio": "3:4直式構圖"
     },
     tags: ["建築", "創意", "圖表"]
   },
@@ -422,7 +422,7 @@ export const INITIAL_TEMPLATES_CONFIG = [
     selections: {
       "character_groups": "中國古代開國皇帝",
       "social_media": "微信朋友圈",
-      "ratio": "9:16豎構圖"
+      "ratio": "9:16直式構圖"
     },
     tags: ["創意", "人物", "攝影"]
   },
@@ -434,7 +434,7 @@ export const INITIAL_TEMPLATES_CONFIG = [
     author: "官方",
     selections: {
       "travel_location": "東北雪鄉",
-      "ratio": "9:16豎構圖"
+      "ratio": "9:16直式構圖"
     },
     tags: ["人物", "攝影", "創意"]
   },
@@ -447,7 +447,7 @@ export const INITIAL_TEMPLATES_CONFIG = [
     selections: {
       "character_originality": "使用附圖中的人物，確保結果與人物一致性",
       "comic_scene": "唯美的臥室",
-      "ratio": "9:16豎構圖"
+      "ratio": "9:16直式構圖"
     },
     tags: ["人物", "創意", "卡通"]
   },
@@ -460,7 +460,7 @@ export const INITIAL_TEMPLATES_CONFIG = [
     selections: {
       "designer": "Jonathan Ive (Jony Ive)",
       "design_item": "無人機",
-      "ratio": "3:4豎構圖"
+      "ratio": "3:4直式構圖"
     },
     tags: ["產品", "創意", "圖表"]
   },
@@ -501,7 +501,7 @@ export const INITIAL_TEMPLATES_CONFIG = [
     author: "@tanshilong",
     selections: {
       "rain_shape": "芭蕾舞者",
-      "ratio": "3:4豎構圖"
+      "ratio": "3:4直式構圖"
     },
     tags: ["攝影", "創意"]
   },
@@ -514,7 +514,7 @@ export const INITIAL_TEMPLATES_CONFIG = [
     selections: {
       "art_type": "美術學",
       "render_style": "3D像素風格",
-      "ratio": "3:4豎構圖"
+      "ratio": "3:4直式構圖"
     },
     tags: ["建築", "創意", "圖表"]
   },
@@ -528,7 +528,7 @@ export const INITIAL_TEMPLATES_CONFIG = [
       "show_name": "龍貓",
       "character_name": "龍貓",
       "render_style": "毛氈與黏土",
-      "ratio": "4:3橫構圖"
+      "ratio": "4:3構圖"
     },
     tags: ["攝影", "創意", "卡通"]
   }

@@ -31,21 +31,21 @@ export const INITIAL_BANKS = {
     category: "visual",
     options: ["全身立繪", "半身肖像", "動態戰鬥姿勢", "背影回眸"]
   },
-  grid_pose: { 
-    label: "九宮格動作", 
-    category: "action", 
+  grid_pose: {
+    label: "九宮格動作",
+    category: "action",
     options: [
-      "前景手指虛化", "目光鎖定鏡頭", "單色下巴托手", "透過模糊肩帶拍攝", 
-      "正面特寫陰影", "斜角拍攝", "雙手置於鎖骨", "坐姿半身側面", 
+      "前景手指虛化", "目光鎖定鏡頭", "單色下巴托手", "透過模糊肩帶拍攝",
+      "正面特寫陰影", "斜角拍攝", "雙手置於鎖骨", "坐姿半身側面",
       "側面微距水滴", "閉眼仰頭享受", "用手遮擋陽光", "回眸一笑", "吹泡泡糖特寫",
-      "正面直視鏡頭，表情平靜，眼神清澈", "凝視鏡頭，嘴角微微上揚，展現自信", 
-      "專注地看著鏡頭，表情柔和，眼神溫和", "側身回望，眼神溫柔，嘴角上揚", 
-      "轉身回眸，長髮飄逸，笑容自然", "手輕撫下巴，表情優雅，眼神柔和", 
-      "單手支撐下巴，表情自然，眼神專注", "利用肩帶營造景深，焦點清晰在眼睛", 
+      "正面直視鏡頭，表情平靜，眼神清澈", "凝視鏡頭，嘴角微微上揚，展現自信",
+      "專注地看著鏡頭，表情柔和，眼神溫和", "側身回望，眼神溫柔，嘴角上揚",
+      "轉身回眸，長髮飄逸，笑容自然", "手輕撫下巴，表情優雅，眼神柔和",
+      "單手支撐下巴，表情自然，眼神專注", "利用肩帶營造景深，焦點清晰在眼睛",
       "正在吹泡泡糖，表情可愛，眼神專注", "側面微距特寫，突出面部輪廓和細節"
-    ] 
+    ]
   },
-  
+
   camera_angle: {
     label: "拍攝角度",
     category: "visual",
@@ -225,11 +225,11 @@ export const INITIAL_BANKS = {
     label: "畫幅比例",
     category: "visual",
     options: [
-      "3:4豎構圖",
-      "9:16豎構圖",
+      "3:4直式構圖",
+      "9:16直式構圖",
       "1:1",
-      "4:3橫構圖",
-      "16:9橫構圖",
+      "4:3橫式構圖",
+      "16:9橫式構圖",
       "圓形畫幅"
     ]
   },
@@ -244,7 +244,7 @@ export const INITIAL_BANKS = {
     category: "item",
     options: ["Labubu藝術公仔", "暴力熊積木熊", "泡泡瑪特Molly", "復古泰迪熊", "賽博龐克機械狗"]
   },
-  
+
   // Old ones preserved for compatibility or other templates
   lens_param: {
     label: "九宮格鏡頭",
@@ -446,11 +446,11 @@ export const INITIAL_DEFAULTS = {
   render_style: "Octane Render 和 Cinema 4D",
   position: "頂部中央",
   company: "任天堂（Nintendo）",
-  ratio: "3:4豎構圖",
-  
+  ratio: "3:4直式構圖",
+
   // Grid defaults
   grid_pose: "前景手指虛化",
-  
+
   // Legacy defaults
   lens_param: "85mm, f/1.8",
   lighting: "大型頂置柔光箱，輕微側向反射光",
