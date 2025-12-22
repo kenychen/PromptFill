@@ -1,19 +1,20 @@
 import React from 'react';
-import { 
-  LayoutGrid, FileText, Search, RotateCcw, Globe, Settings, 
+import {
+  LayoutGrid, FileText, Search, RotateCcw, Globe, Settings,
   ChevronRight, ChevronDown, ImageIcon, ArrowUpRight, Plus,
-  Pencil, Copy as CopyIcon, Download, Trash2, ArrowUpDown, Home
+  Pencil, Copy as CopyIcon, Download, Trash2, ArrowUpDown, Home,
+  Github
 } from 'lucide-react';
 import { PremiumButton } from './PremiumButton';
 
 /**
  * TemplatesSidebar 元件 - 負責展示左側模板列表
  */
-export const TemplatesSidebar = React.memo(({ 
-  mobileTab, 
+export const TemplatesSidebar = React.memo(({
+  mobileTab,
   setDiscoveryView,
   activeTemplateId,
-  setActiveTemplateId, 
+  setActiveTemplateId,
   filteredTemplates,
   searchQuery,
   setSearchQuery,
@@ -44,9 +45,9 @@ export const TemplatesSidebar = React.memo(({
   TAG_STYLES
 }) => {
   return (
-    <div 
+    <div
       className={`
-      ${mobileTab === 'templates' ? 'flex fixed inset-0 z-50 md:static pb-16 bg-gradient-to-br from-[#F3F4F6] to-[#E5E7EB]' : 'hidden'} 
+      ${mobileTab === 'templates' ? 'flex fixed inset-0 z-50 md:static pb-16 bg-gradient-to-br from-[#F3F4F6] to-[#E5E7EB]' : 'hidden'}
       md:flex flex-col flex-shrink-0 h-full
       w-full md:w-[380px] bg-white border-r border-gray-200 shadow-xl
       md:rounded-3xl overflow-hidden relative
@@ -61,24 +62,24 @@ export const TemplatesSidebar = React.memo(({
                       <span className="text-gray-400 text-xs font-normal ml-1">V0.5.0</span>
                   </h1>
              </div>
-             
+
              <div className="flex items-center gap-1.5">
                   {/* Discovery View Toggle (Home button) */}
-                  <button 
-                    onClick={() => setDiscoveryView(true)} 
-                    className="p-1.5 rounded-lg transition-all text-orange-500 bg-orange-50/50 hover:text-orange-600 hover:bg-orange-100 shadow-sm" 
+                  <button
+                    onClick={() => setDiscoveryView(true)}
+                    className="p-1.5 rounded-lg transition-all text-orange-500 bg-orange-50/50 hover:text-orange-600 hover:bg-orange-100 shadow-sm"
                     title="回到發現頁"
                   >
                     <Home size={18} />
                   </button>
 
                   <button onClick={handleRefreshSystemData} className="p-1.5 rounded-lg transition-colors text-gray-400 hover:text-orange-600 hover:bg-orange-50" title={t('refresh_desc')}><RotateCcw size={16} /></button>
-                  
+
                   {/* Sort Menu Button */}
                   <div className="relative">
-                    <button 
-                      onClick={() => setIsSortMenuOpen(!isSortMenuOpen)} 
-                      className="p-1.5 rounded-lg transition-colors text-gray-400 hover:text-orange-600 hover:bg-orange-50" 
+                    <button
+                      onClick={() => setIsSortMenuOpen(!isSortMenuOpen)}
+                      className="p-1.5 rounded-lg transition-colors text-gray-400 hover:text-orange-600 hover:bg-orange-50"
                       title="排序"
                     >
                       <ArrowUpDown size={16} />
@@ -110,6 +111,15 @@ export const TemplatesSidebar = React.memo(({
 
                   <button onClick={() => setLanguage(language === 'zh-tw' ? 'en' : 'zh-tw')} className="text-[10px] px-2 py-1 rounded-full border transition-colors flex items-center gap-1 shadow-sm bg-transparent text-gray-400 border-gray-200 hover:text-orange-600 hover:bg-orange-50"><Globe size={10} />{language.toUpperCase()}</button>
                   <button onClick={() => setIsSettingsOpen(true)} className="p-1.5 rounded-lg transition-colors text-gray-400 hover:text-orange-600 hover:bg-orange-50" title={t('settings')}><Settings size={16} /></button>
+                  <a
+                    href="https://github.com/doggy8088/PromptFill"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-lg transition-colors text-gray-400 hover:text-gray-900 hover:bg-gray-50"
+                    title="GitHub Repository"
+                  >
+                    <Github size={16} />
+                  </a>
              </div>
          </div>
 
@@ -142,7 +152,7 @@ export const TemplatesSidebar = React.memo(({
                           </div>
                           <div className={`flex items-center gap-1.5 ${activeTemplateId === t_item.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} transition-all duration-300`}>
                               {INITIAL_TEMPLATES_CONFIG.some(cfg => cfg.id === t_item.id) && (
-                                  <button 
+                                  <button
                                       title={t('reset_template')}
                                       onClick={(e) => { e.stopPropagation(); handleResetTemplate(t_item.id, e); }}
                                       className="p-1.5 hover:bg-orange-100 rounded-lg text-gray-400 hover:text-orange-500 transition-all duration-200 hover:scale-110"
@@ -150,28 +160,28 @@ export const TemplatesSidebar = React.memo(({
                                       <RotateCcw size={13} />
                                   </button>
                               )}
-                              <button 
+                              <button
                                   title={t('rename')}
                                   onClick={(e) => { e.stopPropagation(); startRenamingTemplate(t_item, e); }}
                                   className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-orange-600 transition-all duration-200 hover:scale-110"
                               >
                                   <Pencil size={13} />
                               </button>
-                              <button 
+                              <button
                                   title={t('duplicate')}
                                   onClick={(e) => { e.stopPropagation(); handleDuplicateTemplate(t_item, e); }}
                                   className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-orange-600 transition-all duration-200 hover:scale-110"
                               >
                                   <CopyIcon size={13} />
                               </button>
-                              <button 
+                              <button
                                   title={t('export_template')}
                                   onClick={(e) => { e.stopPropagation(); handleExportTemplate(t_item); }}
                                   className="p-1.5 hover:bg-blue-50 rounded-lg text-gray-400 hover:text-blue-600 transition-all duration-200 hover:scale-110"
                               >
                                   <Download size={13} />
                               </button>
-                              <button 
+                              <button
                                   title={t('delete')}
                                   onClick={(e) => { e.stopPropagation(); handleDeleteTemplate(t_item.id, e); }}
                                   className="p-1.5 hover:bg-red-50 rounded-lg text-gray-400 hover:text-red-500 transition-all duration-200 hover:scale-110"
@@ -271,7 +281,7 @@ export const TemplatesSidebar = React.memo(({
                 {t('new_template')}
             </PremiumButton>
           </div>
-          
+
           <div className="hidden md:block p-4 pt-0 border-t border-transparent text-[10px] leading-relaxed text-center opacity-60 transition-opacity" style={{ color: '#545454' }} />
       </div>
     </div>

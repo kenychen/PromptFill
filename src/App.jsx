@@ -18,6 +18,7 @@ import { SCENE_WORDS, STYLE_WORDS } from './constants/slogan';
 
 // ====== 导入自定义 Hooks ======
 import { useStickyState } from './hooks/useStickyState';
+import { useToast } from './contexts/ToastContext';
 
 // ====== 导入 UI 组件 ======
 import { Variable, VisualEditor, PremiumButton, EditorToolbar, Lightbox, TemplatePreview, TemplatesSidebar, BanksSidebar, CategoryManager, InsertVariableModal, AddBankModal, DiscoveryView } from './components';
@@ -144,6 +145,7 @@ const MobileAnimatedSlogan = React.memo(({ isActive }) => {
 // Poster View Animated Slogan Constants - 已移至 constants/slogan.js
 
 const App = () => {
+  const { addToast } = useToast();
   // 临时功能：瀑布流样式管理
   const [masonryStyleKey, setMasonryStyleKey] = useState('poster');
   const [isStyleMenuOpen, setIsStyleMenuOpen] = useState(false);
@@ -550,7 +552,7 @@ const App = () => {
   const handleDeleteTemplate = (id, e) => {
     e.stopPropagation();
     if (templates.length <= 1) {
-      alert(t('alert_keep_one'));
+      addToast(t('alert_keep_one'));
       return;
     }
     if (window.confirm(t('confirm_delete_template'))) {
@@ -603,9 +605,9 @@ const App = () => {
 
     const notes = [...templateResult.notes, ...bankResult.notes];
     if (notes.length > 0) {
-      alert(`${t('refresh_done_with_conflicts')}\n- ${notes.join('\n- ')}`);
+      addToast(`${t('refresh_done_with_conflicts')}\n- ${notes.join('\n- ')}`);
     } else {
-      alert(t('refresh_done_no_conflict'));
+      addToast(t('refresh_done_no_conflict'));
     }
   };
 
@@ -671,7 +673,7 @@ const App = () => {
           // 验证文件类型
           if (!file.type.startsWith('image/')) {
               if (storageMode === 'browser') {
-                  alert('請選擇圖片檔案');
+                  addToast('請選擇圖片檔案');
               }
               return;
           }
@@ -689,10 +691,10 @@ const App = () => {
               } catch (error) {
                   console.error('圖片上傳失敗:', error);
                   if (storageMode === 'browser' && error.name === 'QuotaExceededError') {
-                      alert('儲存空間不足！圖片過大。\n建議：\n1. 使用圖片連結（URL）方式\n2. 壓縮圖片（tinypng.com）\n3. 匯出備份後清空資料');
+                      addToast('儲存空間不足！圖片過大。\n建議：\n1. 使用圖片連結（URL）方式\n2. 壓縮圖片（tinypng.com）\n3. 匯出備份後清空資料');
                   } else {
                       if (storageMode === 'browser') {
-                          alert('圖片上傳失敗，請重試');
+                          addToast('圖片上傳失敗，請重試');
                       }
                   }
               }
@@ -701,7 +703,7 @@ const App = () => {
           reader.onerror = () => {
               console.error('檔案讀取失敗');
               if (storageMode === 'browser') {
-                  alert('檔案讀取失敗，請重試');
+                  addToast('檔案讀取失敗，請重試');
               }
           };
 
@@ -709,7 +711,7 @@ const App = () => {
       } catch (error) {
           console.error('上傳圖片出錯:', error);
           if (storageMode === 'browser') {
-              alert('上傳圖片出錯，請重試');
+              addToast('上傳圖片出錯，請重試');
           }
       } finally {
           // 重置input，允许重复选择同一文件
@@ -790,7 +792,7 @@ const App = () => {
           showToastMessage('✅ 模板已匯出');
       } catch (error) {
           console.error('匯出失敗:', error);
-          alert('匯出失敗，請重試');
+          addToast('匯出失敗，請重試');
       }
   };
 
@@ -852,7 +854,7 @@ const App = () => {
           showToastMessage('✅ 備份已匯出');
       } catch (error) {
           console.error('匯出失敗:', error);
-          alert('匯出失敗，請重試');
+          addToast('匯出失敗，請重試');
       }
   };
 
@@ -872,7 +874,7 @@ const App = () => {
                       setTemplates(data.templates);
                       if (data.banks) setBanks(data.banks);
                       if (data.categories) setCategories(data.categories);
-                      alert('匯入成功！');
+                      addToast('匯入成功！');
                   }
               } else if (data.id && data.name) {
                   // 单个模板
@@ -880,13 +882,13 @@ const App = () => {
                   const newTemplate = { ...data, id: newId };
                   setTemplates(prev => [...prev, newTemplate]);
                   setActiveTemplateId(newId);
-                  alert('模板匯入成功！');
+                  addToast('模板匯入成功！');
               } else {
-                  alert('檔案格式不正確');
+                  addToast('檔案格式不正確');
               }
           } catch (error) {
               console.error('匯入失敗:', error);
-              alert('匯入失敗，請檢查檔案格式');
+              addToast('匯入失敗，請檢查檔案格式');
           }
       };
       reader.readAsText(file);
@@ -899,7 +901,7 @@ const App = () => {
   const handleSelectDirectory = async () => {
       try {
           if (!isFileSystemSupported) {
-              alert(t('browser_not_supported'));
+              addToast(t('browser_not_supported'));
               return;
           }
 
@@ -917,11 +919,11 @@ const App = () => {
 
           // 尝试保存当前数据到文件夹
           await saveToFileSystem(handle);
-          alert(t('auto_save_enabled'));
+          addToast(t('auto_save_enabled'));
       } catch (error) {
           console.error('選擇資料夾失敗:', error);
           if (error.name !== 'AbortError') {
-              alert(t('folder_access_denied'));
+              addToast(t('folder_access_denied'));
           }
       }
   };
@@ -1009,7 +1011,7 @@ const App = () => {
               window.location.reload();
           } catch (error) {
               console.error('清除資料失敗:', error);
-              alert('清除資料失敗');
+              addToast('清除資料失敗');
           }
       }
   };
@@ -1034,9 +1036,9 @@ const App = () => {
       if (directoryHandle) {
           try {
               await loadFromFileSystem(directoryHandle);
-              alert('從資料夾載入成功！');
+              addToast('從資料夾載入成功！');
           } catch (error) {
-              alert('從資料夾載入失敗，請檢查檔案是否存在');
+              addToast('從資料夾載入失敗，請檢查檔案是否存在');
           }
       }
   };
@@ -1150,7 +1152,7 @@ const App = () => {
     const safeKey = newBankKey.trim().replace(/[^a-zA-Z0-9_]/g, '_').toLowerCase();
 
     if (banks[safeKey]) {
-      alert(t('alert_id_exists'));
+      addToast(t('alert_id_exists'));
       return;
     }
 

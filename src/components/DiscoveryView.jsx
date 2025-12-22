@@ -115,16 +115,6 @@ export const DiscoveryView = React.memo(({
               <span className="text-[10px] font-bold text-gray-500">設定</span>
             </button>
 
-            <button
-              onClick={handleRefreshSystemData}
-              className="flex flex-col items-center gap-1.5 group"
-            >
-              <div className="p-3 bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:bg-orange-50 transition-all">
-                <RotateCcw size={20} className="text-gray-600 group-hover:text-orange-600" />
-              </div>
-              <span className="text-[10px] font-bold text-gray-500">同步</span>
-            </button>
-
             <a
               href="https://github.com/doggy8088/PromptFill"
               target="_blank"
@@ -136,6 +126,16 @@ export const DiscoveryView = React.memo(({
               </div>
               <span className="text-[10px] font-bold text-gray-500">GitHub</span>
             </a>
+
+            <button
+              onClick={handleRefreshSystemData}
+              className="flex flex-col items-center gap-1.5 group"
+            >
+              <div className="p-3 bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:bg-orange-50 transition-all">
+                <RotateCcw size={20} className="text-gray-600 group-hover:text-orange-600" />
+              </div>
+              <span className="text-[10px] font-bold text-gray-500">同步</span>
+            </button>
           </div>
 
           {/* 4. 圖像展示（單列） */}
@@ -332,17 +332,6 @@ export const DiscoveryView = React.memo(({
                       <Settings size={20} />
                   </button>
 
-                  <button
-                      onClick={handleRefreshSystemData}
-                      className="p-2.5 rounded-xl transition-all text-gray-500 hover:text-orange-600 hover:bg-white/50 shadow-sm"
-                      title={t('refresh_desc')}
-                  >
-                      <RotateCcw size={20} />
-                  </button>
-              </div>
-
-              {/* Right: GitHub Link */}
-              <div className="flex flex-col items-end gap-1.5 transition-opacity px-4 py-2">
                   <a
                       href="https://github.com/doggy8088/PromptFill"
                       target="_blank"
@@ -352,6 +341,14 @@ export const DiscoveryView = React.memo(({
                   >
                       <Github size={20} />
                   </a>
+
+                  <button
+                      onClick={handleRefreshSystemData}
+                      className="p-2.5 rounded-xl transition-all text-gray-500 hover:text-orange-600 hover:bg-white/50 shadow-sm"
+                      title={t('refresh_desc')}
+                  >
+                      <RotateCcw size={20} />
+                  </button>
               </div>
           </div>
       </div>
