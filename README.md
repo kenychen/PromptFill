@@ -248,4 +248,8 @@ Prompt Fill 現已迭代至 **v0.5.0** 版本。本專案初衷是解決 AI 繪�
 
 本專案採用 [MIT 授權](LICENSE)。
 
+## 🙏 感謝
+
+本專案原始出處為 [TanShilongMario/PromptFill](https://github.com/TanShilongMario/PromptFill)，感謝原作者的開源貢獻。
+
 **Made with ❤️ by 角落工作室**
