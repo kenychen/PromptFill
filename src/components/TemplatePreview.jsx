@@ -82,9 +82,9 @@ export const TemplatePreview = React.memo(
       ? Array.isArray(activeTemplate.language)
         ? activeTemplate.language
         : [activeTemplate.language]
-      : ['cn', 'en'];
+      : ['zh-tw', 'en'];
     const showLanguageToggle = templateLangs.length > 0;
-    const supportsChinese = templateLangs.includes('cn');
+    const supportsChinese = templateLangs.includes('zh-tw');
     const supportsEnglish = templateLangs.includes('en');
 
     // 自動切換到模板支援的語言
@@ -241,12 +241,12 @@ export const TemplatePreview = React.memo(
                   <div className="flex items-center gap-3 mb-4 p-2 bg-gray-50 rounded-lg border border-gray-200 inline-flex">
                     <span className="text-xs text-gray-500 font-medium">模板語言：</span>
                     <button
-                      onClick={() => supportsChinese && setLanguage('cn')}
+                      onClick={() => supportsChinese && setLanguage('zh-tw')}
                       disabled={!supportsChinese}
                       className={`text-sm font-bold transition-all relative py-1 px-2 rounded ${
                         !supportsChinese
                           ? 'text-gray-300 cursor-not-allowed'
-                          : language === 'cn'
+                          : language === 'zh-tw'
                             ? 'text-orange-600 bg-white shadow-sm'
                             : 'text-gray-400 hover:text-gray-600 hover:bg-white/50'
                       }`}

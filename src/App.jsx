@@ -534,8 +534,8 @@ const AnimatedSlogan = React.memo(({ isActive, language }) => {
   const [sceneIndex, setSceneIndex] = useState(0);
   const [styleIndex, setStyleIndex] = useState(0);
 
-  const currentScenes = SCENE_WORDS[language] || SCENE_WORDS.cn;
-  const currentStyles = STYLE_WORDS[language] || STYLE_WORDS.cn;
+  const currentScenes = SCENE_WORDS[language] || SCENE_WORDS['zh-tw'];
+  const currentStyles = STYLE_WORDS[language] || STYLE_WORDS['zh-tw'];
 
   useEffect(() => {
     if (!isActive) return;
@@ -598,8 +598,8 @@ const MobileAnimatedSlogan = React.memo(({ isActive, language }) => {
   const [sceneIndex, setSceneIndex] = useState(0);
   const [styleIndex, setStyleIndex] = useState(0);
 
-  const currentScenes = SCENE_WORDS[language] || SCENE_WORDS.cn;
-  const currentStyles = STYLE_WORDS[language] || STYLE_WORDS.cn;
+  const currentScenes = SCENE_WORDS[language] || SCENE_WORDS['zh-tw'];
+  const currentStyles = STYLE_WORDS[language] || STYLE_WORDS['zh-tw'];
 
   useEffect(() => {
     if (!isActive) return;
@@ -671,8 +671,8 @@ const App = () => {
   // bump version keys 以強制刷新新增詞庫與預設值
   const [banks, setBanks] = useStickyState(INITIAL_BANKS, 'app_banks_v9');
   const [defaults, setDefaults] = useStickyState(INITIAL_DEFAULTS, 'app_defaults_v9');
-  const [language, setLanguage] = useStickyState('cn', 'app_language_v1'); // 全域 UI 語言
-  const [templateLanguage, setTemplateLanguage] = useStickyState('cn', 'app_template_language_v1'); // 模板內容語言
+  const [language, setLanguage] = useStickyState('zh-tw', 'app_language_v1'); // 全域 UI 語言
+  const [templateLanguage, setTemplateLanguage] = useStickyState('zh-tw', 'app_template_language_v1'); // 模板內容語言
   const [categories, setCategories] = useStickyState(INITIAL_CATEGORIES, 'app_categories_v1'); // 新狀態
 
   const [templates, setTemplates] = useStickyState(INITIAL_TEMPLATES_CONFIG, 'app_templates_v10');
@@ -1200,7 +1200,7 @@ const App = () => {
             const matchedOption = bank.options.find(
               (opt) =>
                 (typeof opt === 'string' && opt === value) ||
-                (typeof opt === 'object' && (opt.cn === value || opt.en === value))
+                (typeof opt === 'object' && (opt['zh-tw'] === value || opt.en === value))
             );
             newSelections[key] = matchedOption || value;
           } else {
@@ -1264,7 +1264,7 @@ const App = () => {
           ? Array.isArray(t.language)
             ? t.language
             : [t.language]
-          : ['cn', 'en'];
+          : ['zh-tw', 'en'];
         const matchesLanguage = templateLangs.includes(language);
 
         return matchesSearch && matchesTags && matchesLanguage;
@@ -1280,9 +1280,9 @@ const App = () => {
           case 'oldest':
             return templates.indexOf(a) - templates.indexOf(b);
           case 'a-z':
-            return nameA.localeCompare(nameB, language === 'cn' ? 'zh-CN' : 'en');
+            return nameA.localeCompare(nameB, language === 'zh-tw' ? 'zh-TW' : 'en');
           case 'z-a':
-            return nameB.localeCompare(nameA, language === 'cn' ? 'zh-CN' : 'en');
+            return nameB.localeCompare(nameA, language === 'zh-tw' ? 'zh-TW' : 'en');
           case 'random':
             // 使用模板 ID 與隨機種子生成偽隨機數排序
             const hashA = (a.id + randomSeed)

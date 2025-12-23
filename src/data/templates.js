@@ -1,23 +1,23 @@
 /**
  * @typedef {Object} TemplateConfig
  * @property {string} id - 唯一識別符，建議使用 'tpl_' 前綴
- * @property {string|Object} name - 模板顯示名稱，支援雙語物件 {cn: string, en: string} 或單語言字串
- * @property {string|Object} content - 模板內容，支援 markdown 與 {{variable}} 變數，支援雙語物件 {cn: string, en: string} 或單語言字串
+ * @property {string|Object} name - 模板顯示名稱，支援雙語物件 {'zh-tw': string, en: string} 或單語言字串
+ * @property {string|Object} content - 模板內容，支援 markdown 與 {{variable}} 變數，支援雙語物件 {'zh-tw': string, en: string} 或單語言字串
  * @property {string} imageUrl - 預覽縮圖 URL
  * @property {string[]} [imageUrls] - 多圖預覽陣列
  * @property {Object.<string, string|Object>} selections - 預設選中的變數值 map，支援雙語物件或字串
  * @property {string[]} tags - 模板標籤陣列，可選值：建築、人物、攝影、產品、圖表、卡通、寵物、遊戲、創意
  * @property {string|string[]} language - 模板語言，可選值：
- *   - 'cn' - 僅支援中文
+ *   - 'zh-tw' - 僅支援中文
  *   - 'en' - 僅支援英文
- *   - ['cn', 'en'] - 支援雙語（預設值）
+ *   - ['zh-tw', 'en'] - 支援雙語（預設值）
  * 
  * @example 雙語模板
  * {
  *   id: "tpl_example",
- *   name: { cn: "示例模板", en: "Example Template" },
- *   content: { cn: "中文內容...", en: "English content..." },
- *   language: ["cn", "en"]
+ *   name: { 'zh-tw': "示例模板", en: "Example Template" },
+ *   content: { 'zh-tw': "中文內容...", en: "English content..." },
+ *   language: ["zh-tw", "en"]
  * }
  * 
  * @example 單語言模板（僅中文）
@@ -25,7 +25,7 @@
  *   id: "tpl_cn_only",
  *   name: "僅中文模板",
  *   content: "中文內容...",
- *   language: "cn"  // 或 ["cn"]
+ *   language: "zh-tw"  // 或 ["zh-tw"]
  * }
  */
 
@@ -35,7 +35,7 @@
 export const SYSTEM_DATA_VERSION = "0.7.1";
 
 export const DEFAULT_TEMPLATE_CONTENT = {
-  cn: `### Role (角色設定)
+  'zh-tw': `### Role (角色設定)
 你是一位頂尖的 {{role}}，擅長製作詳盡的角色設定圖（Character Sheet）。你具備「像素級拆解」的能力，能夠透視角色的穿著層級、捕捉微表情變化，並將相關物品具象化還原。你特別擅長透過 {{subject}} 的私密物品、隨身物件和生活細節來側面豐富人物性格與背景故事。
 
 ### Task (任務目標)
@@ -110,7 +110,7 @@ Based on the subject image uploaded or described by the user, generate a **"Pano
 };
 
 export const TEMPLATE_PHOTO_GRID = {
-  cn: `### Photo Grid Composition（九宮格攝影）
+  'zh-tw': `### Photo Grid Composition（九宮格攝影）
 
 **編輯場景：** 3x3 網格佈局，採用冷灰色無縫背景。人物（面部特徵與上傳圖片完全一致）身穿 {{clothing}}，確保每張照片中的人物形象保持一致。
 
@@ -149,7 +149,7 @@ export const TEMPLATE_PHOTO_GRID = {
 };
 
 export const TEMPLATE_PHOTO_GRID_V2 = {
-  cn: `### Photo Grid Composition（九宮格攝影出格版）
+  'zh-tw': `### Photo Grid Composition（九宮格攝影出格版）
 
 **編輯場景：** 3x3 網格佈局，採用冷灰色無縫背景。人物（面部特徵與上傳圖片完全一致）身穿 {{clothing}}，確保每張照片中的人物形象保持一致。
 
@@ -192,7 +192,7 @@ export const TEMPLATE_PHOTO_GRID_V2 = {
 };
 
 export const TEMPLATE_FASHION_MOODBOARD = {
-  cn: `### Fashion Illustration Moodboard（時尚插畫情緒板）
+  'zh-tw': `### Fashion Illustration Moodboard（時尚插畫情緒板）
 一張 9:16 直式的高級時尚插畫情緒板，模擬平板掃描效果。
 
 **背景：** 純手繪的奶油色水彩暈染紙張，帶有淡淡的粉色網格。
@@ -223,7 +223,7 @@ A high-end 9:16 vertical fashion illustration moodboard, simulating a tablet sca
 };
 
 export const TEMPLATE_CHARACTER_SELFIE = {
-  cn: `### Character Selfie（人物趣味合影）
+  'zh-tw': `### Character Selfie（人物趣味合影）
 讓 {{character_companion}} 站在男人旁邊，{{action_pose}}，同時對著鏡頭露出調皮的表情。
 
 **背景：** 以 {{background_scene}} 為背景。
@@ -238,7 +238,7 @@ Have {{character_companion}} stand next to the man, {{action_pose}}, while makin
 };
 
 export const TEMPLATE_CLASSIC_SCENE = {
-  cn: `### 經典場景微縮復刻
+  'zh-tw': `### 經典場景微縮復刻
 
 展示一個精緻的、微縮 3D 卡通風格的 {{classic_scene}} 場景，採用清晰的 45° 俯視等軸側視角（Isometric view）。
 
@@ -266,7 +266,7 @@ Showcase an exquisite, miniature 3D cartoon-style {{classic_scene}} scene, using
 };
 
 export const TEMPLATE_CORPORATE_GROWTH = {
-  cn: `### 可視化企業成長之路
+  'zh-tw': `### 可視化企業成長之路
 
 **角色定義**
 你是一位企業演變建築師（Corporate Evolution Architect）。你的目標是創建一張超高密度、垂直堆疊的等距軸測（Isometric）3D 渲染可視化圖像，展示 {{company}} 公司的技術與產品歷史。透過圖像呈現企業的時間線：底部是簡陋的創業故事，透過產品迭代垂直升起，直到現代或未來的巔峰。
@@ -310,12 +310,12 @@ Tilt-shift photography with {{render_style}}, aspect ratio {{ratio}}.`
 };
 
 export const TEMPLATE_DETECTIVE_SOCIAL = {
-  cn: `發揮你的創意一起腦洞，假設 {{character_groups}} 使用 {{social_media}}，包括回覆、評論、按讚，設計一些有趣、有反差的人物在社群媒體互動朋友圈的場景，結合符合人物的大事件，有趣有梗有反差，製作一張 {{social_media}} 的截圖，使用中文，{{ratio}}。`,
+  'zh-tw': `發揮你的創意一起腦洞，假設 {{character_groups}} 使用 {{social_media}}，包括回覆、評論、按讚，設計一些有趣、有反差的人物在社群媒體互動朋友圈的場景，結合符合人物的大事件，有趣有梗有反差，製作一張 {{social_media}} 的截圖，使用中文，{{ratio}}。`,
   en: `Use your creativity to brainstorm with me. Imagine {{character_groups}} using {{social_media}}, including replying, commenting, and liking. Design some fun, high-contrast scenarios of characters interacting on social media feeds, combining big events that fit the characters with humor, memes, and contrast. Create a screenshot of {{social_media}}, in English, with aspect ratio {{ratio}}.`
 };
 
 export const TEMPLATE_MAGAZINE_COVER = {
-  cn: `### PROJECT GOAL | 專案目標
+  'zh-tw': `### PROJECT GOAL | 專案目標
 生成一張 9:16 旅遊雜誌封面級照片，以我上傳的真人照片為基準，實現 100% 五官還原，呈現專業、精緻、具有真實雜誌質感的封面畫面。
 
 ### SUBJECT | 人物設定
@@ -364,7 +364,7 @@ The final result should approach the cover temperament of "Vogue" or "National G
 };
 
 export const TEMPLATE_MANGA_TO_REALITY = {
-  cn: `### SUBJECT | 人物主體
+  'zh-tw': `### SUBJECT | 人物主體
 {{character_originality}}，從漫畫分鏡邊框中跨步走出並打破界線。真實版本與漫畫版本之間充滿動態且無縫的互動。
 
 ### SETTING | 場景設定
@@ -411,7 +411,7 @@ A giant manga book is spread open on the floor.
 };
 
 export const TEMPLATE_FISHEYE_URBAN = {
-  cn: `### 極端魚眼都市奇觀
+  'zh-tw': `### 極端魚眼都市奇觀
 
 {{character_originality}}，用 {{lens_type}} 拍攝的照片，主體是一位穿著 {{school_uniform}} 的 {{subject}}，在 {{urban_location}} 興奮地跳起，{{dynamic_action}}。
 
@@ -435,7 +435,7 @@ Create an urban spectacle blending reality and fantasy. The distortion of the fi
 };
 
 export const TEMPLATE_INDUSTRIAL_DESIGN = {
-  cn: `### 目標
+  'zh-tw': `### 目標
 設計一個頂級的工業設計產品介紹頁，使用極簡的宣傳頁風格；需要深刻理解該設計師的設計理念、設計風格，並將這種理解完全融入產品的工業設計與展示頁面。
 
 ### 內容
@@ -468,7 +468,7 @@ The overall layout is clear in hierarchy, organized, and highly stylish and char
 };
 
 export const TEMPLATE_RAINDROP_ART = {
-  cn: `### Raindrop Art（雨滴定格藝術）
+  'zh-tw': `### Raindrop Art（雨滴定格藝術）
 
 **核心表現：**
 捕捉雨滴落入水面的瞬間，雨滴打落在水面上，飛濺的水珠在空中形成抽象的 {{rain_shape}}。
@@ -496,7 +496,7 @@ The background is a hazy rainy scene.
 };
 
 export const TEMPLATE_ART_GROWTH = {
-  cn: `### 可視化藝術成長之路
+  'zh-tw': `### 可視化藝術成長之路
 
 **角色定義**
 你是一位歷史演變建築師（History Evolution Architect）。你的目標是創建一張超高密度、垂直堆疊的等距軸測（Isometric）3D 展廳渲染可視化圖像，展示 {{art_type}} 的發展歷史。透過展廳呈現里程碑的時間線：底部是簡陋的初期，隨歷史更迭垂直上升，直到現代或未來的巔峰。
@@ -542,7 +542,7 @@ Tilt-shift photography with {{render_style}}, aspect ratio {{ratio}}.`
 };
 
 export const TEMPLATE_MINIATURE_DESK = {
-  cn: `### 窗邊書桌微縮場景
+  'zh-tw': `### 窗邊書桌微縮場景
 
 展示一個在窗邊書桌上的場景。
 
@@ -601,136 +601,136 @@ export const TEMPLATE_TAGS = [
 export const INITIAL_TEMPLATES_CONFIG = [
   {
     id: "tpl_default",
-    name: { cn: "角色概念分解圖", en: "Character Concept Sheet" },
+    name: { 'zh-tw': "角色概念分解圖", en: "Character Concept Sheet" },
     content: DEFAULT_TEMPLATE_CONTENT,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/08/ec433cf214faf102.jpg",
     author: "官方",
     selections: {},
     tags: ["人物", "創意", "圖表"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_photo_grid",
-    name: { cn: "3x3 攝影網格", en: "3x3 Photo Grid" },
+    name: { 'zh-tw': "3x3 攝影網格", en: "3x3 Photo Grid" },
     content: TEMPLATE_PHOTO_GRID,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/08/5302794e63fa130b.jpg",
     author: "官方",
     selections: {
-      "clothing": { cn: "炭灰色無袖連衣裙", en: "Charcoal grey sleeveless dress" },
-      "grid_pose-0": { cn: "前景手指虛化", en: "Out-of-focus fingers in foreground" },
-      "grid_pose-1": { cn: "目光鎖定鏡頭", en: "Eyes locked on camera" },
-      "grid_pose-2": { cn: "單色下巴托手", en: "Monochrome hand on chin" },
-      "grid_pose-3": { cn: "正面特寫陰影", en: "Frontal close-up with shadows" },
-      "grid_pose-4": { cn: "斜角拍攝", en: "Angled shot" },
-      "grid_pose-5": { cn: "雙手置於鎖骨", en: "Hands on collarbones" },
-      "grid_pose-6": { cn: "坐姿半身側面", en: "Seated half-body profile" },
-      "grid_pose-7": { cn: "側面微距水滴", en: "Side macro with water drops" },
-      "grid_pose-8": { cn: "回眸一笑", en: "Looking back with a smile" },
-      "lens_param-0": { cn: "85mm, f/1.8", en: "85mm, f/1.8" },
-      "lens_param-1": { cn: "85mm, f/2.0", en: "85mm, f/2.0" },
-      "lens_param-2": { cn: "50mm, f/2.2", en: "50mm, f/2.2" },
-      "lens_param-3": { cn: "50mm, f/2.5", en: "50mm, f/2.5" },
-      "lens_param-4": { cn: "50mm, f/3.2", en: "50mm, f/3.2" },
-      "lens_param-5": { cn: "35mm, f/4.5", en: "35mm, f/4.5" },
-      "lens_param-6": { cn: "85mm, f/1.9", en: "85mm, f/1.9" },
-      "lens_param-7": { cn: "50mm, f/1.8", en: "50mm, f/1.8" },
-      "lens_param-8": { cn: "85mm, f/2.2", en: "85mm, f/2.2" }
+      "clothing": { 'zh-tw': "炭灰色無袖連衣裙", en: "Charcoal grey sleeveless dress" },
+      "grid_pose-0": { 'zh-tw': "前景手指虛化", en: "Out-of-focus fingers in foreground" },
+      "grid_pose-1": { 'zh-tw': "目光鎖定鏡頭", en: "Eyes locked on camera" },
+      "grid_pose-2": { 'zh-tw': "單色下巴托手", en: "Monochrome hand on chin" },
+      "grid_pose-3": { 'zh-tw': "正面特寫陰影", en: "Frontal close-up with shadows" },
+      "grid_pose-4": { 'zh-tw': "斜角拍攝", en: "Angled shot" },
+      "grid_pose-5": { 'zh-tw': "雙手置於鎖骨", en: "Hands on collarbones" },
+      "grid_pose-6": { 'zh-tw': "坐姿半身側面", en: "Seated half-body profile" },
+      "grid_pose-7": { 'zh-tw': "側面微距水滴", en: "Side macro with water drops" },
+      "grid_pose-8": { 'zh-tw': "回眸一笑", en: "Looking back with a smile" },
+      "lens_param-0": { 'zh-tw': "85mm, f/1.8", en: "85mm, f/1.8" },
+      "lens_param-1": { 'zh-tw': "85mm, f/2.0", en: "85mm, f/2.0" },
+      "lens_param-2": { 'zh-tw': "50mm, f/2.2", en: "50mm, f/2.2" },
+      "lens_param-3": { 'zh-tw': "50mm, f/2.5", en: "50mm, f/2.5" },
+      "lens_param-4": { 'zh-tw': "50mm, f/3.2", en: "50mm, f/3.2" },
+      "lens_param-5": { 'zh-tw': "35mm, f/4.5", en: "35mm, f/4.5" },
+      "lens_param-6": { 'zh-tw': "85mm, f/1.9", en: "85mm, f/1.9" },
+      "lens_param-7": { 'zh-tw': "50mm, f/1.8", en: "50mm, f/1.8" },
+      "lens_param-8": { 'zh-tw': "85mm, f/2.2", en: "85mm, f/2.2" }
     },
     tags: ["人物", "攝影"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_fashion",
-    name: { cn: "時尚情緒板插畫", en: "Fashion Moodboard" },
+    name: { 'zh-tw': "時尚情緒板插畫", en: "Fashion Moodboard" },
     content: TEMPLATE_FASHION_MOODBOARD,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/08/4d9f92ccb4113fdd.jpg",
     author: "官方",
     selections: {},
     tags: ["人物", "創意", "卡通"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_character_selfie",
-    name: { cn: "人物趣味合影", en: "Character Selfie" },
+    name: { 'zh-tw': "人物趣味合影", en: "Character Selfie" },
     content: TEMPLATE_CHARACTER_SELFIE,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/08/c2312d24d0f2c38e.jpeg",
     author: "官方",
     selections: {},
     tags: ["人物", "創意"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_classic_scene",
-    name: { cn: "經典場景微縮復刻", en: "Classic Scene Miniature" },
+    name: { 'zh-tw': "經典場景微縮復刻", en: "Classic Scene Miniature" },
     content: TEMPLATE_CLASSIC_SCENE,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/10/1eac697f5a438542.jpg",
     author: "官方",
     selections: {
-      "classic_scene": { cn: "千與千尋", en: "Spirited Away" },
-      "render_style": { cn: "Octane Render 和 Cinema 4D", en: "Octane Render and Cinema 4D" },
-      "position": { cn: "頂部中央", en: "Top Center" }
+      "classic_scene": { 'zh-tw': "千與千尋", en: "Spirited Away" },
+      "render_style": { 'zh-tw': "Octane Render 和 Cinema 4D", en: "Octane Render and Cinema 4D" },
+      "position": { 'zh-tw': "頂部中央", en: "Top Center" }
     },
     tags: ["卡通", "創意", "遊戲"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_corporate_growth",
-    name: { cn: "可視化企業成長之路", en: "Corporate Evolution Path" },
+    name: { 'zh-tw': "可視化企業成長之路", en: "Corporate Evolution Path" },
     content: TEMPLATE_CORPORATE_GROWTH,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/10/a7e87e49c6144fdc.jpg",
     author: "官方",
     selections: {
-      "company": { cn: "任天堂（Nintendo）", en: "Nintendo" },
-      "render_style": { cn: "3D 像素風格", en: "3D Pixel Art Style" },
-      "ratio": { cn: "3:4 直式構圖", en: "3:4 Vertical" }
+      "company": { 'zh-tw': "任天堂（Nintendo）", en: "Nintendo" },
+      "render_style": { 'zh-tw': "3D 像素風格", en: "3D Pixel Art Style" },
+      "ratio": { 'zh-tw': "3:4 直式構圖", en: "3:4 Vertical" }
     },
     tags: ["建築", "創意", "圖表"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_fisheye_urban",
-    name: { cn: "極端魚眼都市奇觀", en: "Fisheye Urban Wonder" },
+    name: { 'zh-tw': "極端魚眼都市奇觀", en: "Fisheye Urban Wonder" },
     content: TEMPLATE_FISHEYE_URBAN,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/14/b21165a2afefaf4d.jpg",
     author: "官方",
     selections: {
-      "lens_type": { cn: "極端魚眼鏡頭", en: "Extreme Fisheye Lens" },
-      "role": { cn: "年輕女性", en: "Young woman" },
-      "character_originality": { cn: "使用附圖中的人物，確保結果與人物一致性", en: "Use character in attachment, ensure consistency" },
-      "school_uniform": { cn: "灰色開襟衫和格子裙校服", en: "Grey cardigan and plaid skirt uniform" },
-      "urban_location": { cn: "澀谷十字路口", en: "Shibuya Crossing" },
-      "dynamic_action": { cn: "一隻手誇張地伸向鏡頭前景", en: "One hand exaggeratedly reaching towards the foreground" },
-      "fingernail_detail": { cn: "手指甲清晰可見", en: "Fingernails clearly visible" },
-      "building_cluster": { cn: "扭曲的澀谷 109 大樓與林立建築", en: "Distorted Shibuya 109 building and other forest of buildings" },
-      "crowd_traffic": { cn: "擠滿行人與車輛", en: "Bustling traffic" },
-      "monster_element": { cn: "巨大的粉藍漸層卡通怪獸", en: "Giant pink and blue gradient cartoon monster" },
-      "monster_feature": { cn: "巨大的觸手與角", en: "Giant tentacles and horns" },
-      "distorted_city": { cn: "扭曲的城市景觀", en: "Distorted urban landscape" },
-      "lighting_atmosphere": { cn: "陽光明媚", en: "Sunny" },
-      "shadow_contrast": { cn: "光影對比強烈", en: "Strong light-shadow contrast" },
-      "ratio": { cn: "圓形畫幅", en: "Circular Aspect Ratio" },
-      "render_style": { cn: "高品質 2D 插畫風格", en: "High-quality 2D illustration style" }
+      "lens_type": { 'zh-tw': "極端魚眼鏡頭", en: "Extreme Fisheye Lens" },
+      "role": { 'zh-tw': "年輕女性", en: "Young woman" },
+      "character_originality": { 'zh-tw': "使用附圖中的人物，確保結果與人物一致性", en: "Use character in attachment, ensure consistency" },
+      "school_uniform": { 'zh-tw': "灰色開襟衫和格子裙校服", en: "Grey cardigan and plaid skirt uniform" },
+      "urban_location": { 'zh-tw': "澀谷十字路口", en: "Shibuya Crossing" },
+      "dynamic_action": { 'zh-tw': "一隻手誇張地伸向鏡頭前景", en: "One hand exaggeratedly reaching towards the foreground" },
+      "fingernail_detail": { 'zh-tw': "手指甲清晰可見", en: "Fingernails clearly visible" },
+      "building_cluster": { 'zh-tw': "扭曲的澀谷 109 大樓與林立建築", en: "Distorted Shibuya 109 building and other forest of buildings" },
+      "crowd_traffic": { 'zh-tw': "擠滿行人與車輛", en: "Bustling traffic" },
+      "monster_element": { 'zh-tw': "巨大的粉藍漸層卡通怪獸", en: "Giant pink and blue gradient cartoon monster" },
+      "monster_feature": { 'zh-tw': "巨大的觸手與角", en: "Giant tentacles and horns" },
+      "distorted_city": { 'zh-tw': "扭曲的城市景觀", en: "Distorted urban landscape" },
+      "lighting_atmosphere": { 'zh-tw': "陽光明媚", en: "Sunny" },
+      "shadow_contrast": { 'zh-tw': "光影對比強烈", en: "Strong light-shadow contrast" },
+      "ratio": { 'zh-tw': "圓形畫幅", en: "Circular Aspect Ratio" },
+      "render_style": { 'zh-tw': "高品質 2D 插畫風格", en: "High-quality 2D illustration style" }
     },
     tags: ["攝影", "創意", "人物"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_detective_social",
-    name: { cn: "歷史名人的朋友圈", en: "Historical Figure's Moments" },
+    name: { 'zh-tw': "歷史名人的朋友圈", en: "Historical Figure's Moments" },
     content: TEMPLATE_DETECTIVE_SOCIAL,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/14/6ff892060de55ea9.jpg",
     author: "@dotey(寶玉)",
     selections: {
-      "character_groups": { cn: "中國古代開國皇帝", en: "Ancient Chinese Founding Emperors" },
-      "social_media": { cn: "臉書塗鴉牆", en: "WeChat Moments" },
-      "ratio": { cn: "9:16 直式構圖", en: "9:16 Vertical" }
+      "character_groups": { 'zh-tw': "中國古代開國皇帝", en: "Ancient Chinese Founding Emperors" },
+      "social_media": { 'zh-tw': "臉書塗鴉牆", en: "WeChat Moments" },
+      "ratio": { 'zh-tw': "9:16 直式構圖", en: "9:16 Vertical" }
     },
     tags: ["創意", "人物", "攝影"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_magazine_cover",
-    name: { cn: "雜誌大片", en: "Magazine Cover" },
+    name: { 'zh-tw': "雜誌大片", en: "Magazine Cover" },
     content: TEMPLATE_MAGAZINE_COVER,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/16/a6106f5cc6e92a74.jpg",
     imageUrls: [
@@ -739,111 +739,111 @@ export const INITIAL_TEMPLATES_CONFIG = [
     ],
     author: "官方",
     selections: {
-      "travel_location": { cn: "東北雪鄉", en: "Snow Village in Northeast China" },
-      "ratio": { cn: "9:16 直式構圖", en: "9:16 Vertical" }
+      "travel_location": { 'zh-tw': "東北雪鄉", en: "Snow Village in Northeast China" },
+      "ratio": { 'zh-tw': "9:16 直式構圖", en: "9:16 Vertical" }
     },
     tags: ["人物", "攝影", "創意"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_manga_reality",
-    name: { cn: "漫畫人物成真", en: "Manga to Reality" },
+    name: { 'zh-tw': "漫畫人物成真", en: "Manga to Reality" },
     content: TEMPLATE_MANGA_TO_REALITY,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/16/f5291c56ece88cd9.jpg",
     author: "官方",
     selections: {
-      "character_originality": { cn: "使用附圖中的人物，確保結果與人物一致性", en: "Use character in attachment, ensure consistency" },
-      "comic_scene": { cn: "唯美的臥室", en: "Beautiful bedroom" },
-      "ratio": { cn: "9:16 直式構圖", en: "9:16 Vertical" }
+      "character_originality": { 'zh-tw': "使用附圖中的人物，確保結果與人物一致性", en: "Use character in attachment, ensure consistency" },
+      "comic_scene": { 'zh-tw': "唯美的臥室", en: "Beautiful bedroom" },
+      "ratio": { 'zh-tw': "9:16 直式構圖", en: "9:16 Vertical" }
     },
     tags: ["人物", "創意", "卡通"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_industrial_design",
-    name: { cn: "設計大師的產品設計", en: "Industrial Design Masterpiece" },
+    name: { 'zh-tw': "設計大師的產品設計", en: "Industrial Design Masterpiece" },
     content: TEMPLATE_INDUSTRIAL_DESIGN,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/17/7dbe43ae66b1a78c.jpg",
     author: "官方",
     selections: {
-      "designer": { cn: "Jonathan Ive (Jony Ive)", en: "Jonathan Ive" },
-      "design_item": { cn: "無人機", en: "Drone" },
-      "ratio": { cn: "3:4 直式構圖", en: "3:4 Vertical" }
+      "designer": { 'zh-tw': "Jonathan Ive (Jony Ive)", en: "Jonathan Ive" },
+      "design_item": { 'zh-tw': "無人機", en: "Drone" },
+      "ratio": { 'zh-tw': "3:4 直式構圖", en: "3:4 Vertical" }
     },
     tags: ["產品", "創意", "圖表"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_photo_grid_v2",
-    name: { cn: "3x3 攝影網格出格版", en: "3x3 Photo Grid (Out of Box)" },
+    name: { 'zh-tw': "3x3 攝影網格出格版", en: "3x3 Photo Grid (Out of Box)" },
     content: TEMPLATE_PHOTO_GRID_V2,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/17/77bfd2bf7abc3eac.png",
     author: "官方",
     selections: {
-      "clothing": { cn: "炭灰色無袖連衣裙", en: "Charcoal grey sleeveless dress" },
-      "grid_pose-0": { cn: "前景手指虛化", en: "Out-of-focus fingers in foreground" },
-      "grid_pose-1": { cn: "目光鎖定鏡頭", en: "Eyes locked on camera" },
-      "grid_pose-2": { cn: "單色下巴托手", en: "Monochrome hand on chin" },
-      "grid_pose-3": { cn: "正面特寫陰影", en: "Frontal close-up with shadows" },
-      "grid_pose-4": { cn: "斜角拍攝", en: "Angled shot" },
-      "grid_pose-5": { cn: "雙手置於鎖骨", en: "Hands on collarbones" },
-      "grid_pose-6": { cn: "坐姿半身側面", en: "Seated half-body profile" },
-      "grid_pose-7": { cn: "側面微距水滴", en: "Side macro with water drops" },
-      "grid_pose-8": { cn: "回眸一笑", en: "Looking back with a smile" },
-      "lens_param-0": { cn: "85mm, f/1.8", en: "85mm, f/1.8" },
-      "lens_param-1": { cn: "85mm, f/2.0", en: "85mm, f/2.0" },
-      "lens_param-2": { cn: "50mm, f/2.2", en: "50mm, f/2.2" },
-      "lens_param-3": { cn: "50mm, f/2.5", en: "50mm, f/2.5" },
-      "lens_param-4": { cn: "50mm, f/3.2", en: "50mm, f/3.2" },
-      "lens_param-5": { cn: "35mm, f/4.5", en: "35mm, f/4.5" },
-      "lens_param-6": { cn: "85mm, f/1.9", en: "85mm, f/1.9" },
-      "lens_param-7": { cn: "50mm, f/1.8", en: "50mm, f/1.8" },
-      "lens_param-8": { cn: "85mm, f/2.2", en: "85mm, f/2.2" }
+      "clothing": { 'zh-tw': "炭灰色無袖連衣裙", en: "Charcoal grey sleeveless dress" },
+      "grid_pose-0": { 'zh-tw': "前景手指虛化", en: "Out-of-focus fingers in foreground" },
+      "grid_pose-1": { 'zh-tw': "目光鎖定鏡頭", en: "Eyes locked on camera" },
+      "grid_pose-2": { 'zh-tw': "單色下巴托手", en: "Monochrome hand on chin" },
+      "grid_pose-3": { 'zh-tw': "正面特寫陰影", en: "Frontal close-up with shadows" },
+      "grid_pose-4": { 'zh-tw': "斜角拍攝", en: "Angled shot" },
+      "grid_pose-5": { 'zh-tw': "雙手置於鎖骨", en: "Hands on collarbones" },
+      "grid_pose-6": { 'zh-tw': "坐姿半身側面", en: "Seated half-body profile" },
+      "grid_pose-7": { 'zh-tw': "側面微距水滴", en: "Side macro with water drops" },
+      "grid_pose-8": { 'zh-tw': "回眸一笑", en: "Looking back with a smile" },
+      "lens_param-0": { 'zh-tw': "85mm, f/1.8", en: "85mm, f/1.8" },
+      "lens_param-1": { 'zh-tw': "85mm, f/2.0", en: "85mm, f/2.0" },
+      "lens_param-2": { 'zh-tw': "50mm, f/2.2", en: "50mm, f/2.2" },
+      "lens_param-3": { 'zh-tw': "50mm, f/2.5", en: "50mm, f/2.5" },
+      "lens_param-4": { 'zh-tw': "50mm, f/3.2", en: "50mm, f/3.2" },
+      "lens_param-5": { 'zh-tw': "35mm, f/4.5", en: "35mm, f/4.5" },
+      "lens_param-6": { 'zh-tw': "85mm, f/1.9", en: "85mm, f/1.9" },
+      "lens_param-7": { 'zh-tw': "50mm, f/1.8", en: "50mm, f/1.8" },
+      "lens_param-8": { 'zh-tw': "85mm, f/2.2", en: "85mm, f/2.2" }
     },
     tags: ["人物", "攝影"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_raindrop_art",
-    name: { cn: "雨滴定格藝術", en: "Raindrop Art" },
+    name: { 'zh-tw': "雨滴定格藝術", en: "Raindrop Art" },
     content: TEMPLATE_RAINDROP_ART,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/19/6b6e14845635b168.jpg",
     author: "@tanshilong",
     selections: {
-      "rain_shape": { cn: "芭蕾舞者", en: "Ballerina" },
-      "ratio": { cn: "3:4 直式構圖", en: "3:4 Vertical" }
+      "rain_shape": { 'zh-tw': "芭蕾舞者", en: "Ballerina" },
+      "ratio": { 'zh-tw': "3:4 直式構圖", en: "3:4 Vertical" }
     },
     tags: ["攝影", "創意"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_art_growth",
-    name: { cn: "可視化藝術成長之路", en: "Artistic Evolution Path" },
+    name: { 'zh-tw': "可視化藝術成長之路", en: "Artistic Evolution Path" },
     content: TEMPLATE_ART_GROWTH,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/19/47a2cbfec635a29a.jpg", 
     author: "@sundyme",
     selections: {
-      "art_type": { cn: "美術學", en: "Fine Arts" },
-      "render_style": { cn: "3D 像素風格", en: "3D Pixel Art Style" },
-      "ratio": { cn: "3:4 直式構圖", en: "3:4 Vertical" }
+      "art_type": { 'zh-tw': "美術學", en: "Fine Arts" },
+      "render_style": { 'zh-tw': "3D 像素風格", en: "3D Pixel Art Style" },
+      "ratio": { 'zh-tw': "3:4 直式構圖", en: "3:4 Vertical" }
     },
     tags: ["建築", "創意", "圖表"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   },
   {
     id: "tpl_miniature_desk",
-    name: { cn: "窗邊書桌微縮場景", en: "Window Desk Miniature" },
+    name: { 'zh-tw': "窗邊書桌微縮場景", en: "Window Desk Miniature" },
     content: TEMPLATE_MINIATURE_DESK,
     imageUrl: "https://s3.bmp.ovh/imgs/2025/12/20/8e9c9c28b3d2cf1b.jpg",
     author: "@tanshilong",
     selections: {
-      "show_name": { cn: "龍貓", en: "My Neighbor Totoro" },
-      "character_name": { cn: "龍貓", en: "Totoro" },
-      "render_style": { cn: "毛氈與黏土", en: "Felt and Clay" },
-      "ratio": { cn: "4:3 橫向構圖", en: "4:3 Horizontal" }
+      "show_name": { 'zh-tw': "龍貓", en: "My Neighbor Totoro" },
+      "character_name": { 'zh-tw': "龍貓", en: "Totoro" },
+      "render_style": { 'zh-tw': "毛氈與黏土", en: "Felt and Clay" },
+      "ratio": { 'zh-tw': "4:3 橫向構圖", en: "4:3 Horizontal" }
     },
     tags: ["攝影", "創意", "卡通"],
-    language: ["cn", "en"]
+    language: ["zh-tw", "en"]
   }
 ];
 

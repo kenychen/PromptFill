@@ -97,7 +97,7 @@ export const DiscoveryView = React.memo(
               </button>
 
               <button
-                onClick={() => setLanguage(language === 'cn' ? 'en' : 'cn')}
+                onClick={() => setLanguage(language === 'zh-tw' ? 'en' : 'zh-tw')}
                 className="flex flex-col items-center gap-1.5 group"
               >
                 <div className="p-3 bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:bg-orange-50 transition-all">
@@ -289,7 +289,7 @@ export const DiscoveryView = React.memo(
               </div>
 
               <button
-                onClick={() => setLanguage(language === 'cn' ? 'en' : 'cn')}
+                onClick={() => setLanguage(language === 'zh-tw' ? 'en' : 'zh-tw')}
                 className="p-2.5 rounded-xl transition-all text-gray-500 hover:text-orange-600 hover:bg-white/50 shadow-sm flex items-center gap-1.5"
                 title={t('language')}
               >

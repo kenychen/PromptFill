@@ -62,11 +62,11 @@ export const Variable = ({
       return currentVal === opt;
     }
     if (typeof currentVal === 'object' && typeof opt === 'object') {
-      return currentVal.cn === opt.cn && currentVal.en === opt.en;
+      return currentVal['zh-tw'] === opt['zh-tw'] && currentVal.en === opt.en;
     }
     // Fallback for mixed types
-    const valStr = typeof currentVal === 'object' ? currentVal.cn : currentVal;
-    const optStr = typeof opt === 'object' ? opt.cn : opt;
+    const valStr = typeof currentVal === 'object' ? currentVal['zh-tw'] : currentVal;
+    const optStr = typeof opt === 'object' ? opt['zh-tw'] : opt;
     return valStr === optStr;
   };
 

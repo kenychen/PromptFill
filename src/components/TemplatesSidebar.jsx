@@ -152,7 +152,7 @@ export const TemplatesSidebar = React.memo(
                   </div>
 
                   <button
-                    onClick={() => setLanguage(language === 'cn' ? 'en' : 'cn')}
+                    onClick={() => setLanguage(language === 'zh-tw' ? 'en' : 'zh-tw')}
                     className="text-[10px] px-2 py-1 rounded-full border transition-colors flex items-center gap-1 shadow-sm bg-transparent text-gray-400 border-gray-200 hover:text-orange-600 hover:bg-orange-50"
                   >
                     <Globe size={10} />

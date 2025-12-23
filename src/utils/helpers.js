@@ -18,7 +18,7 @@ export const makeUniqueKey = (base, existingKeys, suffix = "custom") => {
 export const getLocalized = (obj, language) => {
   if (!obj) return "";
   if (typeof obj === 'string') return obj;
-  return obj[language] || obj.cn || obj.en || "";
+  return obj[language] || obj['zh-tw'] || obj.en || "";
 };
 
 // 等待圖片載入完成，避免匯出時空白

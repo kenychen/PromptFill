@@ -1,5 +1,5 @@
 export const SCENE_WORDS = {
-  cn: [
+  'zh-tw': [
     "駭客任務",
     "千與千尋",
     "星際大戰",
@@ -30,7 +30,7 @@ export const SCENE_WORDS = {
 };
 
 export const STYLE_WORDS = {
-  cn: [
+  'zh-tw': [
     "3D 卡通風格",
     "寫實風格",
     "UE5 渲染",

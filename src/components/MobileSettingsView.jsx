@@ -15,7 +15,7 @@ export const MobileSettingsView = ({
 }) => {
   
   // 精简后的更新说明 (Localization supported via content structure if needed, but here we use current lang)
-  const updateLogs = language === 'cn' ? [
+  const updateLogs = language === 'zh-tw' ? [
     { version: 'V0.5.1', date: '2025-12-22', content: '全新移动端交互架构，引入侧滑抽屉与沉浸式图片预览；首页引入 Mesh Gradient 彻底根治闪烁。' },
     { version: 'V0.5.0', date: '2025-12-20', content: '深度架构重构，引入发现页瀑布流；导出功能增强，性能大幅提升。' },
     { version: 'V0.4.1', date: '2025-12-12', content: '导出格式优化为 JPG；添加自动提取氛围色背景；移动端导入体验优化。' },
@@ -68,8 +68,8 @@ export const MobileSettingsView = ({
         <SettingItem 
           icon={Globe} 
           label={t('language')} 
-          value={language === 'cn' ? '简体中文' : 'English'} 
-          onClick={() => setLanguage(language === 'cn' ? 'en' : 'cn')}
+          value={language === 'zh-tw' ? '繁體中文' : 'English'} 
+          onClick={() => setLanguage(language === 'zh-tw' ? 'en' : 'zh-tw')}
         />
         <SettingItem 
           icon={Database} 
