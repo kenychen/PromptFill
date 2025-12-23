@@ -14,11 +14,11 @@ export const MobileSettingsView = ({
   SYSTEM_DATA_VERSION, t 
 }) => {
   
-  // 精简后的更新说明 (Localization supported via content structure if needed, but here we use current lang)
+  // 精簡後的更新說明 (Localization supported via content structure if needed, but here we use current lang)
   const updateLogs = language === 'zh-tw' ? [
-    { version: 'V0.5.1', date: '2025-12-22', content: '全新移动端交互架构，引入侧滑抽屉与沉浸式图片预览；首页引入 Mesh Gradient 彻底根治闪烁。' },
-    { version: 'V0.5.0', date: '2025-12-20', content: '深度架构重构，引入发现页瀑布流；导出功能增强，性能大幅提升。' },
-    { version: 'V0.4.1', date: '2025-12-12', content: '导出格式优化为 JPG；添加自动提取氛围色背景；移动端导入体验优化。' },
+    { version: 'V0.5.1', date: '2025-12-22', content: '全新行動端互動架構，引入側滑抽屜與沉浸式圖片預覽；首頁引入 Mesh Gradient 徹底根治閃爍。' },
+    { version: 'V0.5.0', date: '2025-12-20', content: '深度架構重構，引入發現頁瀑布流；匯出功能增強，效能大幅提升。' },
+    { version: 'V0.4.1', date: '2025-12-12', content: '匯出格式優化為 JPG；新增自動提取氛圍色背景；行動端匯入體驗優化。' },
   ] : [
     { version: 'V0.5.1', date: '2025-12-22', content: 'New mobile architecture with drawers and immersive preview; Mesh Gradient for smooth UI.' },
     { version: 'V0.5.0', date: '2025-12-20', content: 'Major refactor with discovery view masonry; improved export and performance.' },
@@ -63,7 +63,7 @@ export const MobileSettingsView = ({
         <p className="text-xs text-gray-400 font-medium mt-1 uppercase tracking-widest">{t('template_subtitle')}</p>
       </div>
 
-      {/* 1. 系统设置 */}
+      {/* 1. 系統設定 */}
       <SettingSection title={t('general_settings')} icon={Settings}>
         <SettingItem 
           icon={Globe} 
@@ -75,11 +75,11 @@ export const MobileSettingsView = ({
           icon={Database} 
           label={t('storage_mode')} 
           value={t('use_browser_storage')} 
-          disabled={true} // 移动端暂不支持本地文件夹
+          disabled={true} // 行動端暫不支援本機資料夾
         />
       </SettingSection>
 
-      {/* 2. 数据管理 */}
+      {/* 2. 資料管理 */}
       <SettingSection title={t('data_management')} icon={RefreshCw}>
         <div className="w-full">
           <label className="block cursor-pointer">
@@ -100,7 +100,7 @@ export const MobileSettingsView = ({
         </div>
       </SettingSection>
 
-      {/* 3. 更新日志 */}
+      {/* 3. 更新日誌 */}
       <SettingSection title={t('what_is_new')} icon={FileText}>
         <div className="p-5 space-y-6">
           {updateLogs.map((log, idx) => (
@@ -115,7 +115,7 @@ export const MobileSettingsView = ({
         </div>
       </SettingSection>
 
-      {/* 4. 关于与联系 */}
+      {/* 4. 關於與聯絡 */}
       <SettingSection title={t('connect_author')} icon={Info}>
         <SettingItem 
           icon={Mail} 
@@ -125,7 +125,7 @@ export const MobileSettingsView = ({
         />
         <SettingItem 
           icon={MessageCircle} 
-          label="微信反馈" 
+          label="微信回饋" 
           value="tanshilongmario" 
           onClick={() => {}}
         />
