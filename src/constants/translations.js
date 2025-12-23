@@ -65,7 +65,7 @@ export const TRANSLATIONS = {
     collapse_view: "收起視圖",
     settings: "設定",
     app_title: "提示詞填空器",
-    author_info: "Made by CornerStudio 角落工作室 | 公眾號：角落工作室 | Wechat: tanshilongmario",
+    author_info: "GitHub Repository",
     export_template: "匯出模板",
     import_template: "匯入模板",
     export_all_templates: "匯出全部",
@@ -189,7 +189,7 @@ export const TRANSLATIONS = {
     collapse_view: "Collapse View",
     settings: "Settings",
     app_title: "Prompt Fill",
-    author_info: "Made by CornerStudio",
+    author_info: "GitHub Repository",
     export_template: "Export Template",
     import_template: "Import Template",
     export_all_templates: "Export All",
@@ -249,4 +249,3 @@ export const TRANSLATIONS = {
     connect_author: "Connect & About",
   },
 };
-

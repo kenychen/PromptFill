@@ -138,7 +138,14 @@ export const MobileSettingsView = ({
 
       <div className="text-center pb-8 opacity-20">
         <p className="text-[10px] font-black tracking-[0.3em] uppercase">Prompt Fill V0.5.1</p>
-        <p className="text-[9px] font-bold mt-1">Made by CornerStudio</p>
+        <a 
+          className="text-[9px] font-bold mt-1 inline-flex items-center gap-1 text-gray-600 hover:text-orange-500 transition-colors"
+          href="https://github.com/doggy8088/PromptFill"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub Repository
+        </a>
       </div>
     </div>
   );
