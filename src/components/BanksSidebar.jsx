@@ -253,6 +253,18 @@ export const CategoryManager = ({ isOpen, onClose, categories, setCategories, ba
       ...prev,
       [newId]: { id: newId, label: newCatName, color: newCatColor }
     }));
+    
+    // 新增分類時同時建立一個預設詞庫
+    const newBankKey = `bank_${Date.now()}`;
+    setBanks(prev => ({
+      ...prev,
+      [newBankKey]: { 
+        label: newCatName, 
+        category: newId,
+        options: []
+      }
+    }));
+    
     setNewCatName("");
     setNewCatColor("slate");
   };
