@@ -19,6 +19,7 @@ import {
   Home,
   Github,
   Toolbox,
+  Banana,
 } from 'lucide-react';
 import { PremiumButton } from './PremiumButton';
 import { getLocalized } from '../utils/helpers';
@@ -376,10 +377,10 @@ export const TemplatesSidebar = React.memo(
                     href="https://gwr.gh.miniasp.com/"
                     target="_blank"
                     rel="Gemini 🍌 無印良品"
-                    className="p-1.5 rounded-lg transition-colors hover:opacity-80 hover:bg-gray-50"
+                    className="p-1.5 rounded-lg transition-colors text-gray-400 hover:text-yellow-500 hover:bg-yellow-50"
                     title=""
                   >
-                    <img src="/gemini.svg" alt="Gemini" className="w-4 h-4" />
+                    <Banana size={16} />
                   </a>
                 </div>
               </div>
