@@ -64,6 +64,10 @@ Prompt Fill 已更新至 **v0.5.1**。專案初衷是解決 AI 繪圖時提示�
 * **圖示庫**： [Lucide React](https://lucide.dev/)
 * **匯出工具**： [html2canvas](https://html2canvas.hertzen.com/)
 
+## 📚 文件
+
+* 內建 Prompt Gallery（模板/詞庫）維護與更新：`docs/prompt-gallery.md`
+
 ## 🚀 快速開始
 
 ### 前置要求
