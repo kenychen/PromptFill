@@ -1,0 +1,51 @@
+name: 同步上游資料檔
+
+on:
+  # 每天 00:00 UTC 自動執行
+  schedule:
+    - cron: '0 0 * * *'
+
+  # 允許手動觸發
+  workflow_dispatch:
+
+jobs:
+  sync-upstream:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 檢出代碼
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 設定 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 安裝依賴
+        run: npm install
+
+      - name: 執行同步腳本
+        run: node .github/workflows/sync-upstream.mjs
+
+      - name: 提交變更
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add src/data/banks.js src/data/templates.js
+
+          # 檢查是否有變更
+          if git diff --staged --quiet; then
+            echo "沒有變更需要提交"
+            exit 0
+          fi
+
+          # 創建新分支
+          BRANCH_NAME="sync-upstream-$(date +%Y%m%d)"
+          git checkout -b "$BRANCH_NAME"
+          
+          git commit -m "chore: 同步上游資料檔 (自動更新)"
+          git push origin "$BRANCH_NAME"
