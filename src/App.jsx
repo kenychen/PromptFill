@@ -51,6 +51,7 @@ import { MASONRY_STYLES } from './constants/masonryStyles';
 
 // ====== 匯入工具函式 ======
 import { deepClone, makeUniqueKey, waitForImageLoad, getLocalized } from './utils/helpers';
+import { compressImage } from './utils/imageUtils';
 import { mergeTemplatesWithSystem, mergeBanksWithSystem } from './utils/merge';
 import { SCENE_WORDS, STYLE_WORDS } from './constants/slogan';
 
@@ -1321,56 +1322,6 @@ const App = () => {
   }, [templates, searchQuery, selectedTags, sortOrder, randomSeed, language]);
 
   const fileInputRef = useRef(null);
-
-  // 壓縮圖片：最長邊不超過 512px，檔案大小不超過 300KB
-  const compressImage = (file, maxSize = 512, maxFileSize = 300 * 1024) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-
-      img.onload = () => {
-        // 計算縮放比例，最長邊不超過 maxSize
-        let { width, height } = img;
-        if (width > height) {
-          if (width > maxSize) {
-            height = Math.round((height * maxSize) / width);
-            width = maxSize;
-          }
-        } else {
-          if (height > maxSize) {
-            width = Math.round((width * maxSize) / height);
-            height = maxSize;
-          }
-        }
-
-        canvas.width = width;
-        canvas.height = height;
-        ctx.drawImage(img, 0, 0, width, height);
-
-        // 嘗試不同品質壓縮，確保檔案大小不超過 maxFileSize
-        let quality = 0.9;
-        let result = canvas.toDataURL('image/jpeg', quality);
-
-        while (result.length > maxFileSize * 1.37 && quality > 0.1) {
-          quality -= 0.1;
-          result = canvas.toDataURL('image/jpeg', quality);
-        }
-
-        resolve(result);
-      };
-
-      img.onerror = () => reject(new Error('圖片載入失敗'));
-
-      // 讀取檔案為 data URL
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        img.src = e.target.result;
-      };
-      reader.onerror = () => reject(new Error('檔案讀取失敗'));
-      reader.readAsDataURL(file);
-    });
-  };
 
   const handleUploadImage = async (e) => {
     try {
