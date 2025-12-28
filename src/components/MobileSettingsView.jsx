@@ -115,25 +115,8 @@ export const MobileSettingsView = ({
         </div>
       </SettingSection>
 
-      {/* 4. 關於與聯絡 */}
-      <SettingSection title={t('connect_author')} icon={Info}>
-        <SettingItem 
-          icon={Github} 
-          label={t('github_link')} 
-          onClick={() => window.open('https://github.com/doggy8088/PromptFill', '_blank')}
-        />
-      </SettingSection>
-
       <div className="text-center pb-8 opacity-20">
         <p className="text-[10px] font-black tracking-[0.3em] uppercase">Prompt Fill V0.5.1</p>
-        <a 
-          className="text-[9px] font-bold mt-1 inline-flex items-center gap-1 text-gray-600 hover:text-orange-500 transition-colors"
-          href="https://github.com/doggy8088/PromptFill"
-          target="_blank"
-          rel="noopener noreferrer"
-          title={t('github_link')}
-        >
-        </a>
       </div>
     </div>
   );

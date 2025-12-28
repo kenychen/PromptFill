@@ -34,8 +34,11 @@ import {
   ArrowUpDown,
   RefreshCw,
   Sparkles,
+  Share2,
+  Loader2,
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
+import LZString from 'lz-string';
 
 // ====== 匯入資料設定 ======
 import { INITIAL_TEMPLATES_CONFIG, TEMPLATE_TAGS, SYSTEM_DATA_VERSION } from './data/templates';
@@ -48,6 +51,7 @@ import { MASONRY_STYLES } from './constants/masonryStyles';
 
 // ====== 匯入工具函式 ======
 import { deepClone, makeUniqueKey, waitForImageLoad, getLocalized } from './utils/helpers';
+import { compressImage } from './utils/imageUtils';
 import { mergeTemplatesWithSystem, mergeBanksWithSystem } from './utils/merge';
 import { SCENE_WORDS, STYLE_WORDS } from './constants/slogan';
 
@@ -740,6 +744,13 @@ const App = () => {
   const [editingTemplateTags, setEditingTemplateTags] = useState(null); // {id, tags}
   const [isDiscoveryView, setDiscoveryView] = useState(true); // 首次載入預設顯示發現（海報）視圖
 
+  // 分享/匯入功能狀態
+  const [sharedTemplate, setSharedTemplate] = useState(null); // 儲存從 URL 解析的模板
+  const [sharedBanks, setSharedBanks] = useState({}); // 儲存從 URL 解析的詞庫
+  const [sharedDefaults, setSharedDefaults] = useState({}); // 儲存從 URL 解析的預設值
+  const [isShareMode, setIsShareMode] = useState(false); // 分享模式狀態
+  const [isImporting, setIsImporting] = useState(false); // 匯入中狀態
+
   // Zoom 圖片：按下 ESC 關閉
   useEffect(() => {
     if (!zoomedImage) return;
@@ -1312,7 +1323,7 @@ const App = () => {
 
   const fileInputRef = useRef(null);
 
-  const handleUploadImage = (e) => {
+  const handleUploadImage = async (e) => {
     try {
       const file = e.target.files?.[0];
       if (!file) return;
@@ -1325,54 +1336,41 @@ const App = () => {
         return;
       }
 
-      // 移除檔案大小限制，讓使用者自由上傳
-      // 若超出 localStorage 限制，會在 useStickyState 中捕獲並提示
+      // 壓縮圖片
+      const compressedDataUrl = await compressImage(file);
 
-      const reader = new FileReader();
+      try {
+        setTemplates((prev) =>
+          prev.map((t) => {
+            if (t.id !== activeTemplateId) return t;
 
-      reader.onloadend = () => {
-        try {
-          setTemplates((prev) =>
-            prev.map((t) => {
-              if (t.id !== activeTemplateId) return t;
-
-              if (imageUpdateMode === 'add') {
-                const newUrls = [...(t.imageUrls || [t.imageUrl]), reader.result];
+            if (imageUpdateMode === 'add') {
+              const newUrls = [...(t.imageUrls || [t.imageUrl]), compressedDataUrl];
+              return { ...t, imageUrls: newUrls, imageUrl: newUrls[0] };
+            } else {
+              // Replace current index
+              if (t.imageUrls && Array.isArray(t.imageUrls)) {
+                const newUrls = [...t.imageUrls];
+                newUrls[currentImageEditIndex] = compressedDataUrl;
                 return { ...t, imageUrls: newUrls, imageUrl: newUrls[0] };
-              } else {
-                // Replace current index
-                if (t.imageUrls && Array.isArray(t.imageUrls)) {
-                  const newUrls = [...t.imageUrls];
-                  newUrls[currentImageEditIndex] = reader.result;
-                  return { ...t, imageUrls: newUrls, imageUrl: newUrls[0] };
-                }
-                return { ...t, imageUrl: reader.result };
               }
-            })
-          );
-        } catch (error) {
-          console.error('圖片上傳失敗:', error);
-          if (storageMode === 'browser' && error.name === 'QuotaExceededError') {
-            addToast(
-              '儲存空間不足！圖片過大。\n建議：\n1. 使用圖片連結（URL）方式\n2. 壓縮圖片（tinypng.com）\n3. 匯出備份後清空資料',
-              'error'
-            );
-          } else {
-            if (storageMode === 'browser') {
-              addToast('圖片上傳失敗，請重試', 'error');
+              return { ...t, imageUrl: compressedDataUrl };
             }
+          })
+        );
+      } catch (error) {
+        console.error('圖片上傳失敗:', error);
+        if (storageMode === 'browser' && error.name === 'QuotaExceededError') {
+          addToast(
+            '儲存空間不足！圖片過大。\n建議：\n1. 使用圖片連結（URL）方式\n2. 壓縮圖片（tinypng.com）\n3. 匯出備份後清空資料',
+            'error'
+          );
+        } else {
+          if (storageMode === 'browser') {
+            addToast('圖片上傳失敗，請重試', 'error');
           }
         }
-      };
-
-      reader.onerror = () => {
-        console.error('檔案讀取失敗');
-        if (storageMode === 'browser') {
-          addToast('檔案讀取失敗，請重試', 'error');
-        }
-      };
-
-      reader.readAsDataURL(file);
+      }
     } catch (error) {
       console.error('上傳圖片出錯:', error);
       if (storageMode === 'browser') {
@@ -2015,6 +2013,249 @@ const App = () => {
       .catch(() => {});
   };
 
+  // ====== 分享/匯入功能 ======
+
+  // 提取模板中使用的變數 keys
+  const extractVariableKeys = (content) => {
+    const keys = new Set();
+    const localizedContent = typeof content === 'object'
+      ? Object.values(content).join(' ')
+      : content;
+    const regex = /{{(.*?)}}/g;
+    let match;
+    while ((match = regex.exec(localizedContent)) !== null) {
+      keys.add(match[1].trim());
+    }
+    return Array.from(keys);
+  };
+
+  // 生成分享 URL（圖片直接用 lzstring 編碼，不上傳）
+  const generateShareUrl = () => {
+    const templateToShare = isShareMode && sharedTemplate ? sharedTemplate : activeTemplate;
+
+    // 提取模板使用到的變數 keys
+    const usedKeys = extractVariableKeys(templateToShare.content);
+
+    // 只包含使用到的詞庫和預設值
+    const usedBanks = {};
+    const usedDefaults = {};
+    usedKeys.forEach(key => {
+      if (banks[key]) {
+        usedBanks[key] = banks[key];
+      }
+      if (defaults[key]) {
+        usedDefaults[key] = defaults[key];
+      }
+    });
+
+    // 確保分享資料包含「社群」標籤（複製陣列避免修改原樣板）
+    const shareTags = [...(templateToShare.tags || [])];
+    if (!shareTags.includes('社群')) {
+      shareTags.push('社群');
+    }
+
+    // 構建分享資料（圖片直接包含 base64）
+    const shareData = {
+      name: templateToShare.name,
+      content: templateToShare.content,
+      selections: templateToShare.selections || {},
+      tags: shareTags,
+      author: templateToShare.author || '',
+      banks: usedBanks,
+      defaults: usedDefaults,
+      ...(templateToShare.imageUrl && { imageUrl: templateToShare.imageUrl }),
+      ...(templateToShare.imageUrls && { imageUrls: templateToShare.imageUrls }),
+    };
+
+    try {
+      const jsonStr = JSON.stringify(shareData);
+      // 使用 LZ-String 壓縮
+      const compressed = LZString.compressToEncodedURIComponent(jsonStr);
+      const baseUrl = window.location.origin + window.location.pathname;
+      return `${baseUrl}#template=${compressed}`;
+    } catch (err) {
+      console.error('Failed to generate share URL:', err);
+      return null;
+    }
+  };
+
+  // 解析分享 URL
+  const parseShareUrl = () => {
+    const hash = window.location.hash;
+    if (!hash || !hash.includes('template=')) {
+      return null;
+    }
+
+    try {
+      const params = new URLSearchParams(hash.substring(1));
+      const templateParam = params.get('template');
+      if (!templateParam) return null;
+
+      // 使用 LZ-String 解壓縮
+      const jsonStr = LZString.decompressFromEncodedURIComponent(templateParam);
+      if (!jsonStr) return null;
+
+      const templateData = JSON.parse(jsonStr);
+
+      return {
+        template: {
+          id: `shared_${Date.now()}`,
+          name: templateData.name || t('shared_template') || '分享的模板',
+          content: templateData.content || '',
+          selections: templateData.selections || {},
+          author: templateData.author || t('from_share') || '分享',
+          tags: templateData.tags || [],
+          ...(templateData.imageUrl && { imageUrl: templateData.imageUrl }),
+          ...(templateData.imageUrls && { imageUrls: templateData.imageUrls }),
+        },
+        banks: templateData.banks || {},
+        defaults: templateData.defaults || {},
+      };
+    } catch (err) {
+      console.error('Failed to parse share URL:', err);
+      return null;
+    }
+  };
+
+  // 處理分享按鈕點擊
+  const handleShare = async () => {
+    try {
+      const shareUrl = generateShareUrl();
+      if (!shareUrl) {
+        addToast(t('share_failed') || '分享失敗', 'error');
+        return;
+      }
+
+      await navigator.clipboard.writeText(shareUrl);
+      addToast(t('share_copied') || '✅ 分享連結已複製');
+    } catch (err) {
+      console.error('Share failed:', err);
+      addToast(t('share_failed') || '分享失敗', 'error');
+    }
+  };
+
+  // 處理匯入分享的模板
+  const handleImportShared = async () => {
+    if (!sharedTemplate) return;
+
+    setIsImporting(true);
+    addToast(t('importing_template') || '📥 匯入模板中...', 'info');
+
+    try {
+      const newTemplate = {
+        ...sharedTemplate,
+        id: `tpl_${Date.now()}`,
+      };
+
+      // 提取模板中使用的所有變數 keys
+      const usedKeys = extractVariableKeys(sharedTemplate.content);
+
+      // 合併詞庫（只加入本地不存在的）
+      const mergedBanks = { ...banks };
+      Object.keys(sharedBanks).forEach(key => {
+        if (!mergedBanks[key]) {
+          mergedBanks[key] = sharedBanks[key];
+        }
+      });
+
+      // 合併預設值（只加入本地不存在的）
+      const mergedDefaults = { ...defaults };
+      Object.keys(sharedDefaults).forEach(key => {
+        if (!mergedDefaults[key]) {
+          mergedDefaults[key] = sharedDefaults[key];
+        }
+      });
+
+      // 自動產生未定義變數的詞庫與預設值
+      usedKeys.forEach(key => {
+        // 如果詞庫不存在，自動產生
+        if (!mergedBanks[key]) {
+          // 嘗試從 selections 中獲取預設值
+          let defaultValue = null;
+          const selections = sharedTemplate.selections || {};
+          // selections 的 key 格式為 "varName-0", "varName-1" 等
+          const selectionKey = Object.keys(selections).find(k => k.startsWith(`${key}-`));
+          if (selectionKey) {
+            defaultValue = selections[selectionKey];
+          }
+
+          // 產生詞庫選項
+          const option = defaultValue || { "zh-tw": key, en: key };
+          mergedBanks[key] = {
+            label: { "zh-tw": key, en: key },
+            category: "other",
+            options: [option]
+          };
+        }
+
+        // 如果預設值不存在，自動產生
+        if (!mergedDefaults[key]) {
+          // 嘗試從 selections 中獲取預設值
+          const selections = sharedTemplate.selections || {};
+          const selectionKey = Object.keys(selections).find(k => k.startsWith(`${key}-`));
+          if (selectionKey && selections[selectionKey]) {
+            mergedDefaults[key] = selections[selectionKey];
+          } else {
+            // 使用變數名稱作為預設值
+            mergedDefaults[key] = { "zh-tw": key, en: key };
+          }
+        }
+      });
+
+      setBanks(mergedBanks);
+      setDefaults(mergedDefaults);
+
+      // 新增模板並切換到該模板
+      setTemplates([...templates, newTemplate]);
+      setActiveTemplateId(newTemplate.id);
+
+      // 清除分享模式狀態和 URL hash
+      setSharedTemplate(null);
+      setSharedBanks({});
+      setSharedDefaults({});
+      setIsShareMode(false);
+      window.history.replaceState(null, '', window.location.pathname);
+
+      addToast(t('import_success') || '✅ 模板已匯入');
+    } catch (err) {
+      console.error('Import failed:', err);
+      addToast(t('import_failed') || '匯入失敗', 'error');
+    } finally {
+      setIsImporting(false);
+    }
+  };
+
+  // 退出分享模式（不匯入）
+  const exitShareMode = () => {
+    if (!isShareMode) return;
+    setSharedTemplate(null);
+    setSharedBanks({});
+    setSharedDefaults({});
+    setIsShareMode(false);
+    // 清除 URL hash
+    window.history.replaceState(null, '', window.location.pathname);
+  };
+
+  // 頁面載入時解析分享 URL
+  useEffect(() => {
+    const parsed = parseShareUrl();
+    if (parsed) {
+      setSharedTemplate(parsed.template);
+      setSharedBanks(parsed.banks);
+      setSharedDefaults(parsed.defaults);
+      setIsShareMode(true);
+      setDiscoveryView(false);
+    }
+  }, []);
+
+  // 當使用者選擇其他模板時，退出分享模式
+  useEffect(() => {
+    if (isShareMode) {
+      exitShareMode();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTemplateId]);
+
   const handleExportImage = async () => {
     setIsExporting(true);
 
@@ -2158,6 +2399,7 @@ const App = () => {
             handleDeleteTemplate={handleDeleteTemplate}
             handleAddTemplate={handleAddTemplate}
             INITIAL_TEMPLATES_CONFIG={INITIAL_TEMPLATES_CONFIG}
+            templates={templates}
             editingTemplateNameId={editingTemplateNameId}
             tempTemplateName={tempTemplateName}
             setTempTemplateName={setTempTemplateName}
@@ -2286,13 +2528,31 @@ const App = () => {
                     disabled={isEditing || isExporting}
                     title={isExporting ? t('exporting') : t('export_image')}
                     color="orange"
-                    className="whitespace-nowrap"
                   >
                     <img src="./gemini.svg" alt="Gemini" className="w-4 h-4 flex-shrink-0" />
-                    <span className="hidden sm:inline">
-                      {isExporting ? t('exporting') : t('export_image')}
-                    </span>
                   </PremiumButton>
+                  {isShareMode ? (
+                    <PremiumButton
+                      onClick={handleImportShared}
+                      disabled={isImporting}
+                      title={isImporting ? (t('importing_template') || '匯入中...') : (t('import_shared') || '匯入模板')}
+                      color="emerald"
+                    >
+                      {isImporting ? (
+                        <Loader2 size={16} className="animate-spin" />
+                      ) : (
+                        <Download size={16} />
+                      )}
+                    </PremiumButton>
+                  ) : (
+                    <PremiumButton
+                      onClick={handleShare}
+                      title={t('share') || '分享'}
+                      color="blue"
+                    >
+                      <Share2 size={16} />
+                    </PremiumButton>
+                  )}
                 </div>
               </div>
             )}
@@ -2353,7 +2613,7 @@ const App = () => {
                     </div>
                   ) : (
                     <TemplatePreview
-                      activeTemplate={activeTemplate}
+                      activeTemplate={isShareMode && sharedTemplate ? sharedTemplate : activeTemplate}
                       banks={banks}
                       defaults={defaults}
                       categories={categories}
@@ -2372,7 +2632,7 @@ const App = () => {
                       language={templateLanguage}
                       setLanguage={setTemplateLanguage}
                       // 標籤編輯相關
-                      TEMPLATE_TAGS={TEMPLATE_TAGS}
+                      TEMPLATE_TAGS={['社群', ...TEMPLATE_TAGS]}
                       handleUpdateTemplateTags={handleUpdateTemplateTags}
                       editingTemplateTags={editingTemplateTags}
                       setEditingTemplateTags={setEditingTemplateTags}

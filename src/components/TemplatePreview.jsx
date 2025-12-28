@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Plus,
+  Crown,
 } from 'lucide-react';
 import { getLocalized } from '../utils/helpers';
 
@@ -323,8 +324,9 @@ export const TemplatePreview = React.memo(
                   {(activeTemplate.tags || []).map((tag) => (
                     <span
                       key={tag}
-                      className={`px-2.5 py-1 rounded-md text-xs font-bold tracking-wide border ${TAG_STYLES[tag] || TAG_STYLES['default']}`}
+                      className={`px-2.5 py-1 rounded-md text-xs font-bold tracking-wide border flex items-center gap-1 ${TAG_STYLES[tag] || TAG_STYLES['default']}`}
                     >
+                      {tag === '多奇' && <Crown size={12} className="text-amber-500" />}
                       {displayTag(tag)}
                     </span>
                   ))}

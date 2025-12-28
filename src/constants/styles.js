@@ -115,6 +115,7 @@ export const CATEGORY_STYLES = {
 };
 
 export const TAG_STYLES = {
+  "社群": "bg-cyan-50 text-cyan-600 border border-cyan-200",
   "建築": "bg-stone-50 text-stone-600 border border-stone-200",
   "人物": "bg-rose-50 text-rose-600 border border-rose-200",
   "攝影": "bg-orange-50 text-orange-600 border border-orange-200",
@@ -130,6 +131,7 @@ export const TAG_STYLES = {
 
 export const TAG_LABELS = {
   "zh-tw": {
+    "社群": "社群",
     "建築": "建築",
     "人物": "人物",
     "攝影": "攝影",
@@ -142,6 +144,7 @@ export const TAG_LABELS = {
     "創意": "創意"
   },
   en: {
+    "社群": "Community",
     "建築": "Architecture",
     "人物": "Character",
     "攝影": "Photography",

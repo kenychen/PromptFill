@@ -20,6 +20,7 @@ import {
   Github,
   Toolbox,
   Banana,
+  Crown,
 } from 'lucide-react';
 import { PremiumButton } from './PremiumButton';
 import { getLocalized } from '../utils/helpers';
@@ -59,6 +60,7 @@ export const TemplatesSidebar = React.memo(
     handleDeleteTemplate,
     handleAddTemplate,
     INITIAL_TEMPLATES_CONFIG,
+    templates,
     editingTemplateNameId,
     tempTemplateName,
     setTempTemplateName,
@@ -97,7 +99,6 @@ export const TemplatesSidebar = React.memo(
                 <div className="flex flex-row items-baseline gap-2">
                   <h1 className="font-bold tracking-tight text-sm text-orange-500">
                     提示詞填空器
-                    <span className="text-gray-400 text-xs font-normal ml-1">V0.5.1</span>
                   </h1>
                 </div>
 
@@ -167,16 +168,7 @@ export const TemplatesSidebar = React.memo(
                   >
                     <Settings size={16} />
                   </button>
-                  <a
-                    href="https://github.com/doggy8088/PromptFill"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg transition-colors text-gray-400 hover:text-gray-900 hover:bg-gray-50"
-                    title={t('github_link')}
-                  >
-                    <Github size={16} />
-                  </a>
-                </div>
+                  </div>
               </div>
 
               <div className="flex flex-col gap-3">
@@ -200,6 +192,25 @@ export const TemplatesSidebar = React.memo(
                   >
                     {t('all_templates')}
                   </button>
+                  {/* 多奇按鈕：只有當有模板包含「多奇」標籤時才顯示 */}
+                  {templates?.some(tpl => tpl.tags?.includes('多奇')) && (
+                    <button
+                      onClick={() => setSelectedTags(selectedTags === '多奇' ? '' : '多奇')}
+                      className={`flex-shrink-0 px-3 py-1 rounded-full text-[10px] font-bold transition-all border flex items-center gap-1 ${selectedTags === '多奇' ? 'bg-amber-500 text-white border-amber-500 shadow-md shadow-amber-500/20' : 'bg-white text-gray-500 border-gray-200 hover:border-amber-200 hover:text-amber-500'}`}
+                    >
+                      <Crown size={10} className={selectedTags === '多奇' ? 'text-white' : 'text-amber-500'} />
+                      多奇
+                    </button>
+                  )}
+                  {/* 社群按鈕：只有當有模板包含「社群」標籤時才顯示 */}
+                  {templates?.some(tpl => tpl.tags?.includes('社群')) && (
+                    <button
+                      onClick={() => setSelectedTags(selectedTags === '社群' ? '' : '社群')}
+                      className={`flex-shrink-0 px-3 py-1 rounded-full text-[10px] font-bold transition-all border ${selectedTags === '社群' ? 'bg-orange-500 text-white border-orange-500 shadow-md shadow-orange-500/20' : 'bg-white text-gray-500 border-gray-200 hover:border-orange-200 hover:text-orange-500'}`}
+                    >
+                      社群
+                    </button>
+                  )}
                   {TEMPLATE_TAGS.map((tag) => (
                     <button
                       key={tag}
@@ -264,11 +275,16 @@ export const TemplatesSidebar = React.memo(
                             </div>
                           </div>
                         ) : (
-                          <span
-                            className={`truncate text-sm transition-all ${activeTemplateId === t_item.id ? 'font-bold text-gray-900' : 'font-medium text-gray-700'}`}
-                          >
-                            {getLocalized(t_item.name, language)}
-                          </span>
+                          <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                            {(t_item.tags || []).includes('多奇') && (
+                              <Crown size={14} className="text-amber-500 flex-shrink-0" />
+                            )}
+                            <span
+                              className={`truncate text-sm transition-all ${activeTemplateId === t_item.id ? 'font-bold text-gray-900' : 'font-medium text-gray-700'}`}
+                            >
+                              {getLocalized(t_item.name, language)}
+                            </span>
+                          </div>
                         )}
                       </div>
 
@@ -355,7 +371,7 @@ export const TemplatesSidebar = React.memo(
                 style={{ color: '#545454' }}
               >
                 <div className="flex items-center justify-center gap-2">
-                   <a
+                  <a
                     href="https://github.com/doggy8088/PromptFill"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -364,7 +380,7 @@ export const TemplatesSidebar = React.memo(
                   >
                     <Github size={16} />
                   </a>
-                   <a
+                  <a
                     href="https://chromewebstore.google.com/detail/chatgpt-%E8%90%AC%E8%83%BD%E5%B7%A5%E5%85%B7%E7%AE%B1/fmijcafgekkphdijpclfgnjhchmiokgp?authuser=0&hl=zh-TW&pli=1"
                     target="_blank"
                     rel="ChatGPT 萬能工具箱"
@@ -373,7 +389,7 @@ export const TemplatesSidebar = React.memo(
                   >
                     <Toolbox size={16} />
                   </a>
-                   <a
+                  <a
                     href="https://gwr.gh.miniasp.com/"
                     target="_blank"
                     rel="Gemini 🍌 無印良品"
@@ -382,6 +398,7 @@ export const TemplatesSidebar = React.memo(
                   >
                     <Banana size={16} />
                   </a>
+                  <span className="text-gray-400 text-xs font-normal ml-1">V0.5.1</span>
                 </div>
               </div>
             </div>

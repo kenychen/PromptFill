@@ -125,6 +125,16 @@ export const TRANSLATIONS = {
     connect_author: "聯絡與關於",
     toolbox_chatgpt: "ChatGPT 萬能工具箱",
     gemini_muji: "Gemini 🍌 無印良品",
+    // 分享/匯入功能
+    share: "分享",
+    share_copied: "✅ 分享連結已複製",
+    share_failed: "分享失敗",
+    import_shared: "匯入模板",
+    import_success: "✅ 模板已匯入",
+    import_failed: "匯入失敗",
+    importing_template: "📥 匯入中...",
+    shared_template: "分享的模板",
+    from_share: "分享",
   },
   en: {
     template_management: "Templates",
@@ -251,5 +261,15 @@ export const TRANSLATIONS = {
     connect_author: "Connect & About",
     toolbox_chatgpt: "ChatGPT All-in-One Toolbox",
     gemini_muji: "Gemini 🍌 MUJI",
+    // Share/Import
+    share: "Share",
+    share_copied: "✅ Share link copied",
+    share_failed: "Share failed",
+    import_shared: "Import Template",
+    import_success: "✅ Template imported",
+    import_failed: "Import failed",
+    importing_template: "📥 Importing...",
+    shared_template: "Shared Template",
+    from_share: "Shared",
   },
 };
